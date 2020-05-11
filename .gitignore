@@ -1,0 +1,6 @@
+# intellij
+/.idea
+
+# sbt's target directories
+/target/
+/project/target/
