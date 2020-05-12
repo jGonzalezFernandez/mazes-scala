@@ -51,7 +51,7 @@ case class OrthogonalGrid(rows: PositiveInt, columns: PositiveInt) extends Grid 
     }
 
     g.dispose()
-    javax.imageio.ImageIO.write(canvas, "png", new java.io.File(s"$fileName.png"))
+    Grid.writeImage(canvas, fileName)
   }
 
 }

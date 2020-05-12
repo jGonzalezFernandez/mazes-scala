@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage
 import scala.collection.mutable
 import Utils._
 
@@ -38,5 +39,13 @@ trait Grid {
   def getNeighboursOf(cell: Cell): Seq[Cell]
 
   def makePng(fileName: String): Unit
+
+}
+
+object Grid {
+
+  def writeImage(canvas: BufferedImage, fileName: String): Unit = {
+    javax.imageio.ImageIO.write(canvas, "png", new java.io.File(s"PNGs/$fileName.png"))
+  }
 
 }

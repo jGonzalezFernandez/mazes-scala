@@ -4,3 +4,7 @@
 # sbt's target directories
 /target/
 /project/target/
+/project/project/target/
+
+# developer specific properties
+/build.properties
