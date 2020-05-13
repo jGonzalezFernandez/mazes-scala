@@ -8,3 +8,6 @@
 
 # developer specific properties
 /build.properties
+
+# target folder for maze images
+/PNGs

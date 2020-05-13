@@ -11,7 +11,7 @@ trait Maze extends Algorithm {
 
   private val grid = gridType match {
     case GridType.ORTHOGONAL => OrthogonalGrid(rows, columns)
-    case GridType.HEX        => ???
+    case GridType.HEX        => HexagonalGrid(rows, columns)
   }
 
   private val maze: Grid = applyAlgorithm(grid)
