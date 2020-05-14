@@ -2,27 +2,25 @@ import HexagonalGrid._
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
-import Utils.PositiveInt
+import Utils._
 
-case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
-
-  private def isEven(int: Int): Boolean = int % 2 == 0
+final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
 
   private def getNorthRow(cell: Cell): Int = if (isEven(cell.column)) cell.row - 1 else cell.row
 
   private def getSouthRow(cell: Cell): Int = if (isEven(cell.column)) cell.row else cell.row + 1
 
-  private def getNorthCellOf(cell: Cell): Option[Cell] = getCell(cell.row - 1, cell.column)
+  def getNorthCellOf(cell: Cell): Option[Cell] = getCell(cell.row - 1, cell.column)
 
-  private def getSouthCellOf(cell: Cell): Option[Cell] = getCell(cell.row + 1, cell.column)
+  def getSouthCellOf(cell: Cell): Option[Cell] = getCell(cell.row + 1, cell.column)
 
-  private def getNortheastCellOf(cell: Cell): Option[Cell] = getCell(getNorthRow(cell), cell.column + 1)
+  def getNortheastCellOf(cell: Cell): Option[Cell] = getCell(getNorthRow(cell), cell.column + 1)
 
-  private def getSoutheastCellOf(cell: Cell): Option[Cell] = getCell(getSouthRow(cell), cell.column + 1)
+  def getSoutheastCellOf(cell: Cell): Option[Cell] = getCell(getSouthRow(cell), cell.column + 1)
 
-  private def getNorthwestCellOf(cell: Cell): Option[Cell] = getCell(getNorthRow(cell), cell.column - 1)
+  def getNorthwestCellOf(cell: Cell): Option[Cell] = getCell(getNorthRow(cell), cell.column - 1)
 
-  private def getSouthwestCellOf(cell: Cell): Option[Cell] = getCell(getSouthRow(cell), cell.column - 1)
+  def getSouthwestCellOf(cell: Cell): Option[Cell] = getCell(getSouthRow(cell), cell.column - 1)
 
   def getNeighboursOf(cell: Cell): Seq[Cell] =
     Seq(getNorthCellOf(cell), getSouthCellOf(cell), getNortheastCellOf(cell), getSoutheastCellOf(cell), getNorthwestCellOf(cell), getSouthwestCellOf(cell)).flatten
@@ -55,14 +53,14 @@ case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
       var cy = hexagonHeight * row + b
       if (!isEven(column)) cy += b
 
-      val x0 = (cx - EDGE_SIZE).toInt
-      val x1 = (cx - a).toInt
-      val x2 = (cx + a).toInt
-      val x3 = (cx + EDGE_SIZE).toInt
+      val x0 = cx - EDGE_SIZE
+      val x1 = cx - a
+      val x2 = cx + a
+      val x3 = cx + EDGE_SIZE
 
-      val y0 = (cy - b).toInt
-      val y1 = cy.toInt
-      val y2 = (cy + b).toInt
+      val y0 = cy - b
+      val y1 = cy
+      val y2 = cy + b
 
       val northWall     = new Line2D.Double(x1, y0, x2, y0)
       val southWall     = new Line2D.Double(x1, y2, x2, y2)

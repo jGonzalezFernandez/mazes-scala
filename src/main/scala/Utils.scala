@@ -7,4 +7,6 @@ object Utils {
 
   val random = new scala.util.Random
 
+  def isEven(int: Int): Boolean = int % 2 == 0
+
 }

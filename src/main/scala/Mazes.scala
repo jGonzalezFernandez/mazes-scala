@@ -10,8 +10,9 @@ trait Maze extends Algorithm {
   def columns: PositiveInt
 
   private val grid = gridType match {
-    case GridType.ORTHOGONAL => OrthogonalGrid(rows, columns)
-    case GridType.HEX        => HexagonalGrid(rows, columns)
+    case GridType.SQUARE     => SquareGrid(rows, columns)
+    case GridType.HEXAGONAL  => HexagonalGrid(rows, columns)
+    case GridType.TRIANGULAR => TriangularGrid(rows, columns)
   }
 
   private val maze: Grid = applyAlgorithm(grid)
@@ -20,4 +21,4 @@ trait Maze extends Algorithm {
 
 }
 
-case class RecursiveBacktrackerMaze(gridType: GridType, rows: PositiveInt, columns: PositiveInt) extends Maze with RecursiveBacktrackerAlgo
+final case class RecursiveBacktrackerMaze(gridType: GridType, rows: PositiveInt, columns: PositiveInt) extends Maze with RecursiveBacktrackerAlgo

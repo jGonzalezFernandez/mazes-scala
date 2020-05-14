@@ -5,10 +5,11 @@ object Main extends App {
   val rows: PositiveInt    = 20
   val columns: PositiveInt = 20
 
-  val recursiveBacktrackerMaze    = RecursiveBacktrackerMaze(GridType.ORTHOGONAL, rows, columns)
-  val recursiveBacktrackerHexMaze = RecursiveBacktrackerMaze(GridType.HEX, rows, columns)
+  val regularMaze = RecursiveBacktrackerMaze(GridType.SQUARE, rows, columns)
+  val sigmaMaze   = RecursiveBacktrackerMaze(GridType.HEXAGONAL, rows, columns)
+  val deltaMaze   = RecursiveBacktrackerMaze(GridType.TRIANGULAR, rows, columns)
 
-  recursiveBacktrackerMaze.makePng("recursiveBacktrackerMaze")
-  recursiveBacktrackerHexMaze.makePng("recursiveBacktrackerHexMaze")
-
+  regularMaze.makePng("regularMaze")
+  sigmaMaze.makePng("sigmaMaze")
+  deltaMaze.makePng("deltaMaze")
 }

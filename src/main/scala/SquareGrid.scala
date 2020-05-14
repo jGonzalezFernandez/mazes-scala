@@ -1,10 +1,10 @@
-import OrthogonalGrid._
+import SquareGrid._
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 import Utils.PositiveInt
 
-case class OrthogonalGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
+final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
 
   def getNorthCellOf(cell: Cell): Option[Cell] = getCell(cell.row - 1, cell.column)
 
@@ -64,7 +64,7 @@ case class OrthogonalGrid(rows: PositiveInt, columns: PositiveInt) extends Grid 
 
 }
 
-object OrthogonalGrid {
+object SquareGrid {
 
   val EDGE_SIZE = 40
 
