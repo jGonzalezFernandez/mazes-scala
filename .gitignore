@@ -1,0 +1,13 @@
+# intellij
+/.idea
+
+# sbt's target directories
+/target/
+/project/target/
+/project/project/target/
+
+# developer specific properties
+/build.properties
+
+# target folder for maze images
+/PNGs
