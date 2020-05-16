@@ -1,6 +1,8 @@
 import java.awt.image.BufferedImage
-import scala.collection.mutable
+
 import Utils._
+
+import scala.collection.mutable
 
 trait Grid {
 

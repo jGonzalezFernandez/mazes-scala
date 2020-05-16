@@ -1,7 +1,8 @@
-import SquareGrid._
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
+
+import SquareGrid._
 import Utils.PositiveInt
 
 final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
@@ -18,11 +19,11 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Gri
 
   def makePng(fileName: String): Unit = {
     /*
-     *   x0y0     x1y0
+     *   x0.y0     x1.y0
      *
      *
      *
-     *   x0y1     x1y1
+     *   x0.y1     x1.y1
      */
 
     // background size and color

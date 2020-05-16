@@ -1,6 +1,7 @@
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
+
 import TriangularGrid._
 import Utils._
 
@@ -10,7 +11,7 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
 
   def getNorthCellOf(cell: Cell): Option[Cell] = if (isPointingUp(cell)) None else getCell(cell.row - 1, cell.column)
 
-  def getSouthCellOf(cell: Cell): Option[Cell] = if (isPointingUp(cell)) getCell(cell.row + 1, cell.column) else None
+  def getSouthCellOf(cell: Cell): Option[Cell] = if (!isPointingUp(cell)) None else getCell(cell.row + 1, cell.column)
 
   def getEastCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column + 1)
 
@@ -19,11 +20,15 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
   def getNeighboursOf(cell: Cell): Seq[Cell] = Seq(getNorthCellOf(cell), getSouthCellOf(cell), getEastCellOf(cell), getWestCellOf(cell)).flatten
 
   def makePng(fileName: String): Unit = {
-    //  _____
-    //  \   /
-    //   \ /
-    //
-    val halfWidth      = EDGE_SIZE / 2.0
+    /*
+     *        x1.y0        ||   x0.y1     x2.y1
+     *                     ||
+     *          c          ||          c
+     *                     ||
+     *   x0.y1     x2.y1   ||        x1.y0
+     */
+    val triangleWidth  = EDGE_SIZE
+    val halfWidth      = triangleWidth / 2.0
     val triangleHeight = EDGE_SIZE * math.sqrt(3) / 2.0
     val halfHeight     = triangleHeight / 2.0
 
@@ -38,8 +43,8 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
     // walls
     g.setColor(Color.BLACK)
     for (row <- 0 until rows.value; column <- 0 until columns.value) {
-      val cx = halfWidth + column * halfWidth
-      val cy = halfHeight + row * triangleHeight
+      val cx = halfWidth * column + halfWidth
+      val cy = triangleHeight * row + halfHeight
 
       val currentCell = cellMatrix(row)(column)
 
@@ -49,15 +54,17 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
       val y0 = if (isPointingUp(currentCell)) cy - halfHeight else cy + halfHeight
       val y1 = if (isPointingUp(currentCell)) cy + halfHeight else cy - halfHeight
 
-      val northWall = new Line2D.Double(x0, y1, x2, y1)
-      val eastWall  = new Line2D.Double(x2, y1, x1, y0)
-      val westWall  = new Line2D.Double(x0, y1, x1, y0)
+      val horizontalWall = new Line2D.Double(x0, y1, x2, y1)
+      val eastWall       = new Line2D.Double(x1, y0, x2, y1)
+      val westWall       = new Line2D.Double(x0, y1, x1, y0)
 
       val northCellOpt = getNorthCellOf(currentCell)
+      val southCellOpt = getSouthCellOf(currentCell)
       val eastCellOpt  = getEastCellOf(currentCell)
       val westCellOpt  = getWestCellOf(currentCell)
 
-      if (!isPointingUp(currentCell) && !northCellOpt.exists(currentCell.isLinkedTo)) g.draw(northWall)
+      if (isPointingUp(currentCell) && !southCellOpt.exists(currentCell.isLinkedTo)) g.draw(horizontalWall)
+      if (!isPointingUp(currentCell) && !northCellOpt.exists(currentCell.isLinkedTo)) g.draw(horizontalWall)
       if (eastCellOpt.isEmpty || !currentCell.isLinkedTo(eastCellOpt.get)) g.draw(eastWall)
       if (westCellOpt.isEmpty || !currentCell.isLinkedTo(westCellOpt.get)) g.draw(westWall)
     }

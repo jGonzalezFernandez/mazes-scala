@@ -1,7 +1,8 @@
-import HexagonalGrid._
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
+
+import HexagonalGrid._
 import Utils._
 
 final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
@@ -26,21 +27,21 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
     Seq(getNorthCellOf(cell), getSouthCellOf(cell), getNortheastCellOf(cell), getSoutheastCellOf(cell), getNorthwestCellOf(cell), getSouthwestCellOf(cell)).flatten
 
   def makePng(fileName: String): Unit = {
-    /*             a
-     *           <--->
-     *   ^     x1y0     x2y0
-     * b |
-     *   v  x0y1     c     x3y1
+    /*
+     *      x1.y0     x2.y0
      *
-     *         x1y2     x2y2
+     *   x0.y1     c     x3.y1
+     *
+     *      x1.y2     x2.y2
      */
-    val a             = EDGE_SIZE / 2.0
-    val b             = EDGE_SIZE * math.sqrt(3) / 2.0
-    val hexagonHeight = 2 * b
+    val hexagonWidth  = EDGE_SIZE * 2.0
+    val aQuarterWidth = hexagonWidth / 4.0
+    val hexagonHeight = EDGE_SIZE * math.sqrt(3)
+    val halfHeight    = hexagonHeight / 2.0
 
     // background size and color
-    val imgWidth  = (3 * a * columns.value + a + 1.5).toInt
-    val imgHeight = (hexagonHeight * rows.value + b + 1.5).toInt
+    val imgWidth  = (3 * aQuarterWidth * columns.value + aQuarterWidth + 1.5).toInt
+    val imgHeight = (hexagonHeight * rows.value + halfHeight + 1.5).toInt
     val canvas    = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB)
     val g         = canvas.createGraphics()
     g.setColor(Color.WHITE)
@@ -49,18 +50,18 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
     // walls
     g.setColor(Color.BLACK)
     for (row <- 0 until rows.value; column <- 0 until columns.value) {
-      val cx = 3 * a * column + EDGE_SIZE
-      var cy = hexagonHeight * row + b
-      if (!isEven(column)) cy += b
+      val cx = 3 * aQuarterWidth * column + EDGE_SIZE
+      var cy = hexagonHeight * row + halfHeight
+      if (!isEven(column)) cy += halfHeight
 
       val x0 = cx - EDGE_SIZE
-      val x1 = cx - a
-      val x2 = cx + a
+      val x1 = cx - aQuarterWidth
+      val x2 = cx + aQuarterWidth
       val x3 = cx + EDGE_SIZE
 
-      val y0 = cy - b
+      val y0 = cy - halfHeight
       val y1 = cy
-      val y2 = cy + b
+      val y2 = cy + halfHeight
 
       val northWall     = new Line2D.Double(x1, y0, x2, y0)
       val southWall     = new Line2D.Double(x1, y2, x2, y2)
