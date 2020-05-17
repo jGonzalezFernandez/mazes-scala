@@ -1,3 +1,7 @@
+package mazes.algorithms
+
+import mazes.grids.Grid
+
 import scala.collection.mutable
 
 trait RecursiveBacktrackerAlgo extends Algorithm { // AKA Depth-first search algorithm

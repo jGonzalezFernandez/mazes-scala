@@ -1,5 +1,9 @@
-import GridType._
-import Utils.PositiveInt
+package mazes
+
+import mazes.Utils.PositiveInt
+import mazes.algorithms.{Algorithm, RecursiveBacktrackerAlgo}
+import mazes.grids.GridType.GridType
+import mazes.grids._
 
 trait Maze extends Algorithm {
 

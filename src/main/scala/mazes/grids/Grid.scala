@@ -1,6 +1,8 @@
+package mazes.grids
+
 import java.awt.image.BufferedImage
 
-import Utils._
+import mazes.Utils._
 
 import scala.collection.mutable
 

@@ -1,9 +1,11 @@
+package mazes.grids
+
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 
-import TriangularGrid._
-import Utils._
+import mazes.Utils._
+import mazes.grids.TriangularGrid._
 
 final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
 

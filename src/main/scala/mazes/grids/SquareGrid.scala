@@ -1,9 +1,11 @@
+package mazes.grids
+
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 
-import SquareGrid._
-import Utils.PositiveInt
+import mazes.Utils.PositiveInt
+import mazes.grids.SquareGrid._
 
 final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
 

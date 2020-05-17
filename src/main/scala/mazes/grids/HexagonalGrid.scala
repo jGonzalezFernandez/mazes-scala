@@ -1,9 +1,11 @@
+package mazes.grids
+
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 
-import HexagonalGrid._
-import Utils._
+import mazes.Utils._
+import mazes.grids.HexagonalGrid._
 
 final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
 

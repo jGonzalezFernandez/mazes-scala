@@ -1,4 +1,4 @@
-name := "mazes"
+name := "mazes-scala"
 
 version := "0.2-SNAPSHOT"
 
