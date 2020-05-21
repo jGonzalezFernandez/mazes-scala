@@ -55,10 +55,10 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Gri
       val eastCellOpt  = getEastCellOf(currentCell)
       val westCellOpt  = getWestCellOf(currentCell)
 
-      if (northCellOpt.isEmpty || !currentCell.isLinkedTo(northCellOpt.get)) g.draw(northWall)
+//      if (northCellOpt.isEmpty || !currentCell.isLinkedTo(northCellOpt.get)) g.draw(northWall)
       if (southCellOpt.isEmpty || !currentCell.isLinkedTo(southCellOpt.get)) g.draw(southWall)
       if (eastCellOpt.isEmpty || !currentCell.isLinkedTo(eastCellOpt.get)) g.draw(eastWall)
-      if (westCellOpt.isEmpty || !currentCell.isLinkedTo(westCellOpt.get)) g.draw(westWall)
+//      if (westCellOpt.isEmpty || !currentCell.isLinkedTo(westCellOpt.get)) g.draw(westWall)
     }
 
     g.dispose()

@@ -44,6 +44,8 @@ trait Grid {
 
   def makePng(fileName: String): Unit
 
+  val rowsArray: Array[Array[Cell]] = Array.ofDim[Array[Cell]](rows.value)
+
 }
 
 object Grid {
