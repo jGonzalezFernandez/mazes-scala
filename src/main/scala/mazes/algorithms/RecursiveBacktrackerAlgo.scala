@@ -4,15 +4,17 @@ import mazes.grids.Grid
 
 import scala.collection.mutable
 
-trait RecursiveBacktrackerAlgo extends Algorithm { // AKA Depth-first search algorithm
+trait RecursiveBacktrackerAlgo extends Algorithm { // AKA Depth-First Search algorithm
 
   def applyAlgorithm(grid: Grid): Grid = {
-    val randomStartingPosition = grid.rowsArray(grid.getRandomRow)(grid.getRandomColumn)
+    val visitedCells           = mutable.Set.empty[grid.Cell]
+    val randomStartingPosition = grid.getRandomCell
     val stack                  = mutable.Stack[grid.Cell](randomStartingPosition)
+
     while (stack.nonEmpty) {
       val currentCell = stack.top
-      currentCell.visited = true
-      val candidateNeighbours = grid.getNeighboursOf(currentCell).filter(!_.visited)
+      visitedCells += currentCell
+      val candidateNeighbours = grid.getNeighboursOf(currentCell).filterNot(visitedCells.contains)
       val randomCandidateOpt  = grid.getRandomCell(candidateNeighbours)
       randomCandidateOpt match {
         case Some(randomCandidate) =>
@@ -21,6 +23,7 @@ trait RecursiveBacktrackerAlgo extends Algorithm { // AKA Depth-first search alg
         case None => stack.pop()
       }
     }
+
     grid
   }
 

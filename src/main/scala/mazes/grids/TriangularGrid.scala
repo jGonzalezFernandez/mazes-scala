@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage
 import mazes.Utils._
 import mazes.grids.TriangularGrid._
 
-final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
+final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation {
 
   private def isPointingUp(cell: Cell) = isEven(cell.row + cell.column)
 
@@ -48,7 +48,7 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
       val cx = halfWidth * column + halfWidth
       val cy = triangleHeight * row + halfHeight
 
-      val currentCell = cellMatrix(row)(column)
+      val currentCell = gridCells(row)(column)
 
       val x0 = cx - halfWidth
       val x1 = cx

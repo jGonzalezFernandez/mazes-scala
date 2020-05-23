@@ -17,7 +17,7 @@ trait Maze extends Algorithm {
     case GridType.SQUARE     => SquareGrid(rows, columns)
     case GridType.HEXAGONAL  => HexagonalGrid(rows, columns)
     case GridType.TRIANGULAR => TriangularGrid(rows, columns)
-    case GridType.CIRCULAR   => CircularGrid(rows, columns)
+    case GridType.CIRCULAR   => CircularGrid(rows)
   }
 
   private val maze: Grid = applyAlgorithm(grid)

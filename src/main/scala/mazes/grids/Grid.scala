@@ -10,10 +10,9 @@ trait Grid {
 
   def rows: PositiveInt
 
-  def columns: PositiveInt
-
   case class Cell(row: Int, column: Int) {
-    var visited: Boolean = false
+    var isStart: Boolean = false
+    var isEnd: Boolean   = false
     private val links    = mutable.Set.empty[Cell]
 
     def linkTo(cell: Cell): Unit = {
@@ -30,21 +29,21 @@ trait Grid {
 
   }
 
-  val cellMatrix: Vector[Vector[Cell]] = Vector.tabulate[Cell](rows.value, columns.value)((i, j) => Cell(i, j))
+  def gridCells: Vector[collection.IndexedSeq[Cell]]
 
-  def getCell(row: Int, column: Int): Option[Cell] = cellMatrix.lift(row).flatMap(_.lift(column))
+  def getCell(row: Int, column: Int): Option[Cell] = gridCells.lift(row).flatMap(_.lift(column))
+
+  def getRandomCell: Cell = {
+    val randomRow    = random.nextInt(gridCells.length)
+    val randomColumn = random.nextInt(gridCells(randomRow).length)
+    gridCells(randomRow)(randomColumn)
+  }
 
   def getRandomCell(cells: collection.Seq[Cell]): Option[Cell] = if (cells.isEmpty) None else Some(cells(random.nextInt(cells.size)))
-
-  def getRandomRow: Int = random.nextInt(rows.value)
-
-  def getRandomColumn: Int = random.nextInt(columns.value)
 
   def getNeighboursOf(cell: Cell): Seq[Cell]
 
   def makePng(fileName: String): Unit
-
-  val rowsArray: Array[Array[Cell]] = Array.ofDim[Array[Cell]](rows.value)
 
 }
 
