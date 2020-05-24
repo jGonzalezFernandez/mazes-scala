@@ -72,7 +72,7 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
 
     // background size and color
     val imgSize = 2 * c + 1
-    val canvas  = new BufferedImage(imgSize, imgSize, BufferedImage.TYPE_INT_RGB)
+    val canvas  = new BufferedImage(imgSize, imgSize, BufferedImage.TYPE_INT_ARGB)
     val g       = canvas.createGraphics()
     g.setColor(Color.WHITE)
     g.fillOval(0, 0, canvas.getWidth, canvas.getHeight)
@@ -88,24 +88,28 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
         val thetaCW        = theta * (column + 1)
 
         // Perhaps we could work directly on the polar coordinate system using the angles and radii, but we are going to
-        // calculate the Cartesian coordinates of the different points using trigonometry
+        // calculate the Cartesian coordinates of the different points using trigonometry.
         val innerCCWx = c + (innerRowRadius * scala.math.cos(thetaCCW))
         val innerCCWy = c + (innerRowRadius * scala.math.sin(thetaCCW))
         val innerCWx  = c + (innerRowRadius * scala.math.cos(thetaCW))
         val innerCWy  = c + (innerRowRadius * scala.math.sin(thetaCW))
+        val outerCWWx = c + (outerRowRadius * scala.math.cos(thetaCCW))
+        val outerCWWy = c + (outerRowRadius * scala.math.sin(thetaCCW))
         val outerCWx  = c + (outerRowRadius * scala.math.cos(thetaCW))
         val outerCWy  = c + (outerRowRadius * scala.math.sin(thetaCW))
 
         val inwardWall    = new Line2D.Double(innerCCWx, innerCCWy, innerCWx, innerCWy)
+        val outwardWall   = new Line2D.Double(outerCWWx, outerCWWy, outerCWx, outerCWy)
         val clockwiseWall = new Line2D.Double(innerCWx, innerCWy, outerCWx, outerCWy)
 
         val currentCell  = gridCells(row)(column)
         val inwardCelOpt = getInwardCellOf(currentCell)
+        val outwardCells = getOutwardsCellsOf(currentCell)
         val clockwiseOpt = getClockwiseCellOf(currentCell)
 
         if (inwardCelOpt.isEmpty || !currentCell.isLinkedTo(inwardCelOpt.get)) g.draw(inwardWall)
         if (clockwiseOpt.isEmpty || !currentCell.isLinkedTo(clockwiseOpt.get)) g.draw(clockwiseWall)
-
+        if (outwardCells.isEmpty) g.draw(outwardWall)
       }
     }
 

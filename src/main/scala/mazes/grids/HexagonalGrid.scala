@@ -81,11 +81,11 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
       val southwestCellOpt = getSouthwestCellOf(currentCell)
 
       if (northCellOpt.isEmpty || !currentCell.isLinkedTo(northCellOpt.get)) g.draw(northWall)
-      if (southCellOpt.isEmpty || !currentCell.isLinkedTo(southCellOpt.get)) g.draw(southWall)
       if (northeastCellOpt.isEmpty || !currentCell.isLinkedTo(northeastCellOpt.get)) g.draw(northeastWall)
       if (southeastCellOpt.isEmpty || !currentCell.isLinkedTo(southeastCellOpt.get)) g.draw(southeastWall)
-      if (northwestCellOpt.isEmpty || !currentCell.isLinkedTo(northwestCellOpt.get)) g.draw(northwestWall)
-      if (southwestCellOpt.isEmpty || !currentCell.isLinkedTo(southwestCellOpt.get)) g.draw(southwestWall)
+      if (southCellOpt.isEmpty) g.draw(southWall)
+      if (northwestCellOpt.isEmpty) g.draw(northwestWall)
+      if (southwestCellOpt.isEmpty) g.draw(southwestWall)
     }
 
     g.dispose()
