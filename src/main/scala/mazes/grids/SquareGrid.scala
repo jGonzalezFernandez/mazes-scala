@@ -55,10 +55,11 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Reg
       val eastCellOpt  = getEastCellOf(currentCell)
       val westCellOpt  = getWestCellOf(currentCell)
 
+      // Since cells share walls, we don't need to draw all of them for each one
       if (northCellOpt.isEmpty || !currentCell.isLinkedTo(northCellOpt.get)) g.draw(northWall)
-      if (southCellOpt.isEmpty || !currentCell.isLinkedTo(southCellOpt.get)) g.draw(southWall)
+//      if (southCellOpt.isEmpty || !currentCell.isLinkedTo(southCellOpt.get)) g.draw(southWall)
       if (eastCellOpt.isEmpty || !currentCell.isLinkedTo(eastCellOpt.get)) g.draw(eastWall)
-      if (westCellOpt.isEmpty || !currentCell.isLinkedTo(westCellOpt.get)) g.draw(westWall)
+//      if (westCellOpt.isEmpty || !currentCell.isLinkedTo(westCellOpt.get)) g.draw(westWall)
     }
 
     g.dispose()
