@@ -53,9 +53,11 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
       }
   }
 
-  def getClockwiseCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column + 1)
+  def getClockwiseCellOf(cell: Cell): Option[Cell] = // Circular grids have no lateral boundaries
+    if (cell.column == gridCells(cell.row).length - 1) getCell(cell.row, 0) else getCell(cell.row, cell.column + 1)
 
-  def getCounterClockwiseCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column - 1)
+  def getCounterClockwiseCellOf(cell: Cell): Option[Cell] =
+    if (cell.column == 0) getCell(cell.row, gridCells(cell.row).length - 1) else getCell(cell.row, cell.column - 1)
 
   def getNeighboursOf(cell: Cell): Seq[Cell] =
     getOutwardsCellsOf(cell) ++ Seq(getInwardCellOf(cell), getClockwiseCellOf(cell), getCounterClockwiseCellOf(cell)).flatten
@@ -81,35 +83,37 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
     g.setColor(Color.BLACK)
     for (row <- gridCells.indices) {
       for (column <- gridCells(row).indices) {
-        val innerRowRadius = EDGE_SIZE * row
-        val outerRowRadius = EDGE_SIZE * (row + 1)
-        val theta          = 2 * scala.math.Pi / gridCells(row).length // cell angle size
-        val thetaCCW       = theta * column
-        val thetaCW        = theta * (column + 1)
+        if (row != 0 && column != 0) { // Since the central cell has only outward neighbors, we skip it to avoid drawing its lateral boundary
+          val innerRowRadius = EDGE_SIZE * row
+          val outerRowRadius = EDGE_SIZE * (row + 1)
+          val theta          = 2 * scala.math.Pi / gridCells(row).length // cell angle size
+          val thetaCCW       = theta * column
+          val thetaCW        = theta * (column + 1)
 
-        // Perhaps we could work directly on the polar coordinate system using the angles and radii, but we are going to
-        // calculate the Cartesian coordinates of the different points using trigonometry.
-        val innerCCWx = c + (innerRowRadius * scala.math.cos(thetaCCW))
-        val innerCCWy = c + (innerRowRadius * scala.math.sin(thetaCCW))
-        val innerCWx  = c + (innerRowRadius * scala.math.cos(thetaCW))
-        val innerCWy  = c + (innerRowRadius * scala.math.sin(thetaCW))
-        val outerCWWx = c + (outerRowRadius * scala.math.cos(thetaCCW))
-        val outerCWWy = c + (outerRowRadius * scala.math.sin(thetaCCW))
-        val outerCWx  = c + (outerRowRadius * scala.math.cos(thetaCW))
-        val outerCWy  = c + (outerRowRadius * scala.math.sin(thetaCW))
+          // Perhaps we could work directly on the polar coordinate system using the angles and radii, but we are going to
+          // calculate the Cartesian coordinates of the different points using trigonometry.
+          val innerCCWx = c + (innerRowRadius * scala.math.cos(thetaCCW))
+          val innerCCWy = c + (innerRowRadius * scala.math.sin(thetaCCW))
+          val innerCWx  = c + (innerRowRadius * scala.math.cos(thetaCW))
+          val innerCWy  = c + (innerRowRadius * scala.math.sin(thetaCW))
+          val outerCCWx = c + (outerRowRadius * scala.math.cos(thetaCCW))
+          val outerCCWy = c + (outerRowRadius * scala.math.sin(thetaCCW))
+          val outerCWx  = c + (outerRowRadius * scala.math.cos(thetaCW))
+          val outerCWy  = c + (outerRowRadius * scala.math.sin(thetaCW))
 
-        val inwardWall    = new Line2D.Double(innerCCWx, innerCCWy, innerCWx, innerCWy)
-        val outwardWall   = new Line2D.Double(outerCWWx, outerCWWy, outerCWx, outerCWy)
-        val clockwiseWall = new Line2D.Double(innerCWx, innerCWy, outerCWx, outerCWy)
+          val inwardWall    = new Line2D.Double(innerCCWx, innerCCWy, innerCWx, innerCWy)
+          val outwardWall   = new Line2D.Double(outerCCWx, outerCCWy, outerCWx, outerCWy)
+          val clockwiseWall = new Line2D.Double(innerCWx, innerCWy, outerCWx, outerCWy)
 
-        val currentCell  = gridCells(row)(column)
-        val inwardCelOpt = getInwardCellOf(currentCell)
-        val outwardCells = getOutwardsCellsOf(currentCell)
-        val clockwiseOpt = getClockwiseCellOf(currentCell)
+          val currentCell  = gridCells(row)(column)
+          val inwardCelOpt = getInwardCellOf(currentCell)
+          val outwardCells = getOutwardsCellsOf(currentCell)
+          val clockwiseOpt = getClockwiseCellOf(currentCell)
 
-        if (inwardCelOpt.isEmpty || !currentCell.isLinkedTo(inwardCelOpt.get)) g.draw(inwardWall)
-        if (clockwiseOpt.isEmpty || !currentCell.isLinkedTo(clockwiseOpt.get)) g.draw(clockwiseWall)
-        if (outwardCells.isEmpty) g.draw(outwardWall)
+          if (inwardCelOpt.isEmpty || !currentCell.isLinkedTo(inwardCelOpt.get)) g.draw(inwardWall)
+          if (clockwiseOpt.isEmpty || !currentCell.isLinkedTo(clockwiseOpt.get)) g.draw(clockwiseWall)
+          if (outwardCells.isEmpty) g.draw(outwardWall)
+        }
       }
     }
 
