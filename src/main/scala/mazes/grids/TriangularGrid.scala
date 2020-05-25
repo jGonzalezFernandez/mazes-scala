@@ -36,7 +36,7 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
 
     // background size and color
     val imgWidth  = (EDGE_SIZE * (columns.value + 1) / 2.0).toInt
-    val imgHeight = (triangleHeight * rows.value).toInt
+    val imgHeight = (triangleHeight * rows.value + 1).toInt
     val canvas    = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB)
     val g         = canvas.createGraphics()
     g.setColor(Color.WHITE)
@@ -68,7 +68,7 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
       if (isPointingUp(currentCell) && !southCellOpt.exists(currentCell.isLinkedTo)) g.draw(horizontalWall)
       if (!isPointingUp(currentCell) && !northCellOpt.exists(currentCell.isLinkedTo)) g.draw(horizontalWall)
       if (eastCellOpt.isEmpty || !currentCell.isLinkedTo(eastCellOpt.get)) g.draw(eastWall)
-      if (westCellOpt.isEmpty || !currentCell.isLinkedTo(westCellOpt.get)) g.draw(westWall)
+      if (westCellOpt.isEmpty) g.draw(westWall)
     }
 
     g.dispose()
