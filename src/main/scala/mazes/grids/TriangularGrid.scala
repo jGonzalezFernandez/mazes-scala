@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage
 import mazes.Utils._
 import mazes.grids.TriangularGrid._
 
-final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
+final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation {
 
   private def isPointingUp(cell: Cell) = isEven(cell.row + cell.column)
 
@@ -36,7 +36,7 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
 
     // background size and color
     val imgWidth  = (EDGE_SIZE * (columns.value + 1) / 2.0).toInt
-    val imgHeight = (triangleHeight * rows.value).toInt
+    val imgHeight = (triangleHeight * rows.value + 1).toInt
     val canvas    = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB)
     val g         = canvas.createGraphics()
     g.setColor(Color.WHITE)
@@ -48,7 +48,7 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
       val cx = halfWidth * column + halfWidth
       val cy = triangleHeight * row + halfHeight
 
-      val currentCell = cellMatrix(row)(column)
+      val currentCell = gridCells(row)(column)
 
       val x0 = cx - halfWidth
       val x1 = cx
@@ -68,7 +68,7 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
       if (isPointingUp(currentCell) && !southCellOpt.exists(currentCell.isLinkedTo)) g.draw(horizontalWall)
       if (!isPointingUp(currentCell) && !northCellOpt.exists(currentCell.isLinkedTo)) g.draw(horizontalWall)
       if (eastCellOpt.isEmpty || !currentCell.isLinkedTo(eastCellOpt.get)) g.draw(eastWall)
-      if (westCellOpt.isEmpty || !currentCell.isLinkedTo(westCellOpt.get)) g.draw(westWall)
+      if (westCellOpt.isEmpty) g.draw(westWall)
     }
 
     g.dispose()

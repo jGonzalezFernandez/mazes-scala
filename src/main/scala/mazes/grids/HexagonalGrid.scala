@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage
 import mazes.Utils._
 import mazes.grids.HexagonalGrid._
 
-final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends Grid {
+final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation {
 
   private def getNorthRow(cell: Cell): Int = if (isEven(cell.column)) cell.row - 1 else cell.row
 
@@ -72,7 +72,7 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
       val northwestWall = new Line2D.Double(x0, y1, x1, y0)
       val southwestWall = new Line2D.Double(x0, y1, x1, y2)
 
-      val currentCell      = cellMatrix(row)(column)
+      val currentCell      = gridCells(row)(column)
       val northCellOpt     = getNorthCellOf(currentCell)
       val southCellOpt     = getSouthCellOf(currentCell)
       val northeastCellOpt = getNortheastCellOf(currentCell)
@@ -81,11 +81,11 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
       val southwestCellOpt = getSouthwestCellOf(currentCell)
 
       if (northCellOpt.isEmpty || !currentCell.isLinkedTo(northCellOpt.get)) g.draw(northWall)
-      if (southCellOpt.isEmpty || !currentCell.isLinkedTo(southCellOpt.get)) g.draw(southWall)
       if (northeastCellOpt.isEmpty || !currentCell.isLinkedTo(northeastCellOpt.get)) g.draw(northeastWall)
       if (southeastCellOpt.isEmpty || !currentCell.isLinkedTo(southeastCellOpt.get)) g.draw(southeastWall)
-      if (northwestCellOpt.isEmpty || !currentCell.isLinkedTo(northwestCellOpt.get)) g.draw(northwestWall)
-      if (southwestCellOpt.isEmpty || !currentCell.isLinkedTo(southwestCellOpt.get)) g.draw(southwestWall)
+      if (southCellOpt.isEmpty) g.draw(southWall)
+      if (northwestCellOpt.isEmpty) g.draw(northwestWall)
+      if (southwestCellOpt.isEmpty) g.draw(southwestWall)
     }
 
     g.dispose()
