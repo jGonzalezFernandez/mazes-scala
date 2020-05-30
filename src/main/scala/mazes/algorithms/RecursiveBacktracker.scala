@@ -4,7 +4,7 @@ import mazes.grids.Grid
 
 import scala.collection.mutable
 
-trait RecursiveBacktrackerAlgo extends Algorithm { // AKA Depth-First Search algorithm
+object RecursiveBacktracker extends Algorithm { // AKA Depth-First Search algorithm
 
   def applyAlgorithm(grid: Grid): Grid = {
     val visitedCells           = mutable.Set.empty[grid.Cell]
