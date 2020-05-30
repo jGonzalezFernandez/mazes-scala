@@ -1,1 +1,1 @@
-# mazes
+# mazes-scala
