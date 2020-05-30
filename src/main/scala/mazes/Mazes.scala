@@ -27,6 +27,3 @@ trait Maze extends Algorithm {
 }
 
 final case class RecursiveBacktrackerMaze(gridType: GridType, rows: PositiveInt, columns: PositiveInt) extends Maze with RecursiveBacktrackerAlgo
-// Hay que poder pasar no sólo un GridType, sino también un algoritmo?
-// Añadir los otros dos algoritmos si eres capaz, del snapshot del email...
-// reorganiza los imports para usar lo menos posible, salvo en los companion objects
