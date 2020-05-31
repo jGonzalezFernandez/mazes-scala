@@ -1,11 +1,11 @@
-package mazes.grids
+package jgonzalezfernandez.mazes.grids
 
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 
-import mazes.Utils.PositiveInt
-import mazes.grids.CircularGrid._
+import jgonzalezfernandez.mazes.Utils.PositiveInt
+import jgonzalezfernandez.mazes.grids.CircularGrid._
 
 import scala.collection.mutable.ArrayBuffer
 

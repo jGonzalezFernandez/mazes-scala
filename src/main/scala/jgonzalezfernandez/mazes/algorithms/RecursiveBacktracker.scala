@@ -1,15 +1,15 @@
-package mazes.algorithms
+package jgonzalezfernandez.mazes.algorithms
 
-import mazes.grids.Grid
+import jgonzalezfernandez.mazes.grids.{Cell, Grid}
 
 import scala.collection.mutable
 
 object RecursiveBacktracker extends Algorithm { // AKA Depth-First Search algorithm
 
   def applyAlgorithm(grid: Grid): Grid = {
-    val visitedCells           = mutable.Set.empty[grid.Cell]
+    val visitedCells           = mutable.Set.empty[Cell]
     val randomStartingPosition = grid.getRandomCell
-    val stack                  = mutable.Stack[grid.Cell](randomStartingPosition)
+    val stack                  = mutable.Stack[Cell](randomStartingPosition)
 
     while (stack.nonEmpty) {
       val currentCell = stack.top

@@ -1,11 +1,11 @@
-package mazes.grids
+package jgonzalezfernandez.mazes.grids
 
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 
-import mazes.Utils._
-import mazes.grids.HexagonalGrid._
+import jgonzalezfernandez.mazes.Utils._
+import jgonzalezfernandez.mazes.grids.HexagonalGrid._
 
 final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation {
 

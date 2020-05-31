@@ -1,6 +1,6 @@
-package mazes.grids
+package jgonzalezfernandez.mazes.grids
 
-import mazes.Utils.PositiveInt
+import jgonzalezfernandez.mazes.Utils.PositiveInt
 
 trait RegularTessellation extends Grid {
 

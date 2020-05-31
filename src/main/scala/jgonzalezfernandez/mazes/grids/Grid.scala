@@ -1,33 +1,12 @@
-package mazes.grids
+package jgonzalezfernandez.mazes.grids
 
 import java.awt.image.BufferedImage
 
-import mazes.Utils._
-
-import scala.collection.mutable
+import jgonzalezfernandez.mazes.Utils._
 
 trait Grid {
 
   def rows: PositiveInt
-
-  case class Cell(row: Int, column: Int) {
-    var isStart: Boolean = false
-    var isEnd: Boolean   = false
-    private val links    = mutable.Set.empty[Cell]
-
-    def linkTo(cell: Cell): Unit = {
-      links += cell
-      cell.links += this
-    }
-
-    def unlinkFrom(cell: Cell): Unit = {
-      links -= cell
-      cell.links -= this
-    }
-
-    def isLinkedTo(cell: Cell): Boolean = links.contains(cell) // directly linked
-
-  }
 
   def gridCells: Vector[collection.IndexedSeq[Cell]]
 

@@ -1,11 +1,11 @@
-package mazes.grids
+package jgonzalezfernandez.mazes.grids
 
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 
-import mazes.Utils._
-import mazes.grids.TriangularGrid._
+import jgonzalezfernandez.mazes.Utils._
+import jgonzalezfernandez.mazes.grids.TriangularGrid._
 
 final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation {
 

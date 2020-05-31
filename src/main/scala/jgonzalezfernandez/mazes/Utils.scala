@@ -1,4 +1,4 @@
-package mazes
+package jgonzalezfernandez.mazes
 
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.numeric._

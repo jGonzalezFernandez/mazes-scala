@@ -1,11 +1,11 @@
-package mazes.grids
+package jgonzalezfernandez.mazes.grids
 
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 
-import mazes.Utils.PositiveInt
-import mazes.grids.SquareGrid._
+import jgonzalezfernandez.mazes.Utils.PositiveInt
+import jgonzalezfernandez.mazes.grids.SquareGrid._
 
 final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation { // AKA Orthogonal grid
 

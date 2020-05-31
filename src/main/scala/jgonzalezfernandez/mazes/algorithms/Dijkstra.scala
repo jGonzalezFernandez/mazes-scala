@@ -1,6 +1,6 @@
-package mazes.algorithms
+package jgonzalezfernandez.mazes.algorithms
 
-import mazes.grids.Grid
+import jgonzalezfernandez.mazes.grids.Grid
 
 object Dijkstra extends Algorithm {
 
