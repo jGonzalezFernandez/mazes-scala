@@ -61,6 +61,13 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Reg
       // But then we must not forget the missing outer walls (in this case, the southern and western boundaries):
       if (southCellOpt.isEmpty) g.draw(southWall)
       if (westCellOpt.isEmpty) g.draw(westWall)
+
+      if (currentCell.isStart || currentCell.isEnd) {
+        g.setColor(Color.RED)
+        g.fillRect(x0, y0, 39, 39)
+        g.setColor(Color.BLACK)
+      }
+
     }
 
     g.dispose()

@@ -12,6 +12,7 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "eu.timepit"   %% "refined"    % "0.9.14",
-  "com.beachape" %% "enumeratum" % "1.6.1"
+  "eu.timepit"    %% "refined"    % "0.9.14",
+  "com.beachape"  %% "enumeratum" % "1.6.1",
+  "org.scalatest" %% "scalatest"  % "3.1.2" % "test"
 )

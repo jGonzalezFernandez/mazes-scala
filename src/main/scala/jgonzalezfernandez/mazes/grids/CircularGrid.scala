@@ -113,6 +113,13 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
           if (inwardCelOpt.isEmpty || !currentCell.isLinkedTo(inwardCelOpt.get)) g.draw(inwardWall)
           if (clockwiseOpt.isEmpty || !currentCell.isLinkedTo(clockwiseOpt.get)) g.draw(clockwiseWall)
           if (outwardCells.isEmpty) g.draw(outwardWall)
+
+          if (currentCell.isStart || currentCell.isEnd) {
+            g.setColor(Color.RED)
+            g.fillRect(innerCCWx.toInt, innerCCWy.toInt, 39, 39)
+            g.setColor(Color.BLACK)
+          }
+
         }
       }
     }

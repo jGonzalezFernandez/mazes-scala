@@ -1,7 +1,7 @@
 package jgonzalezfernandez.mazes
 
 import jgonzalezfernandez.mazes.Utils.PositiveInt
-import jgonzalezfernandez.mazes.algorithms.{GenerationAlgorithm, RecursiveBacktracker}
+import jgonzalezfernandez.mazes.algorithms.{Dijkstra, GenerationAlgorithm, RecursiveBacktracker}
 import jgonzalezfernandez.mazes.grids._
 
 /** @param rows used to determine the full size of the grid if columnsOpt is empty
@@ -16,10 +16,10 @@ final case class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorit
     case GridType.Circular   => CircularGrid(rows)
   }
 
-  private val maze: Grid = generationAlgorithm match {
+  private val maze: Grid = Dijkstra.applyAlgorithm(generationAlgorithm match {
     case GenerationAlgorithm.RecursiveBacktracker => RecursiveBacktracker.applyAlgorithm(grid)
     case GenerationAlgorithm.Random               => ???
-  }
+  })
 
   def makePng(fileName: String): Unit = maze.makePng(fileName)
 

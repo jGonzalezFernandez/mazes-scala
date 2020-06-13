@@ -3,9 +3,11 @@ package jgonzalezfernandez.mazes.grids
 import scala.collection.mutable
 
 final case class Cell(row: Int, column: Int) {
-  var isStart: Boolean = false
-  var isEnd: Boolean   = false
-  private val links    = mutable.Set.empty[Cell]
+  var weight: Int            = 1
+  var isStart: Boolean       = false
+  var isEnd: Boolean         = false
+  var distanceFromStart: Int = Int.MaxValue
+  private val links          = mutable.Set.empty[Cell]
 
   def linkTo(cell: Cell): Unit = {
     links += cell
