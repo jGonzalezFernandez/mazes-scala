@@ -42,8 +42,8 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
     val halfHeight    = hexagonHeight / 2.0
 
     // background size and color
-    val imgWidth  = (3 * aQuarterWidth * columns.value + aQuarterWidth + 1.5).toInt
-    val imgHeight = (hexagonHeight * rows.value + halfHeight + 1.5).toInt
+    val imgWidth  = Math.ceil(3 * aQuarterWidth * columns.value + aQuarterWidth + 1.5).toInt
+    val imgHeight = Math.ceil(hexagonHeight * rows.value + halfHeight + 1.5).toInt
     val canvas    = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB)
     val g         = canvas.createGraphics()
     g.setColor(Color.WHITE)

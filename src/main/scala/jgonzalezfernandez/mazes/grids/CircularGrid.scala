@@ -25,10 +25,10 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
       // If the width of the cells in the previous row were too large for the current row (ratio > 1), we will decrease
       // it by inserting more cells or columns than before (usually double, except for the row at index 1).
       val innerRowRadius     = rowHeight * row
-      val innerCircumference = 2 * scala.math.Pi * innerRowRadius
+      val innerCircumference = 2 * Math.PI * innerRowRadius
       val previousCellCount  = indexedRows(row - 1).length
       val previousCellWidth  = innerCircumference / previousCellCount
-      val ratio              = scala.math.ceil(previousCellWidth / rowHeight).toInt
+      val ratio              = Math.ceil(previousCellWidth / rowHeight).toInt
       val columns            = previousCellCount * ratio
       indexedRows(row) ++= ArrayBuffer.tabulate[Cell](columns)(column => Cell(row, column))
     }
@@ -87,20 +87,20 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
       if (cell.row != 0 && cell.column != 0) { // Since the central cell has only outward neighbors, we skip it to avoid drawing its lateral boundary
         val innerRowRadius = EDGE_SIZE * cell.row
         val outerRowRadius = EDGE_SIZE * (cell.row + 1)
-        val theta          = 2 * scala.math.Pi / indexedCells(cell.row).length // cell angle size
+        val theta          = 2 * Math.PI / indexedCells(cell.row).length // cell angle size
         val thetaCCW       = theta * cell.column
         val thetaCW        = theta * (cell.column + 1)
 
         // Perhaps we could work directly on the polar coordinate system using the angles and radii, but we are going to
         // calculate the Cartesian coordinates of the different points using trigonometry.
-        val innerCCWx = c + (innerRowRadius * scala.math.cos(thetaCCW))
-        val innerCCWy = c + (innerRowRadius * scala.math.sin(thetaCCW))
-        val innerCWx  = c + (innerRowRadius * scala.math.cos(thetaCW))
-        val innerCWy  = c + (innerRowRadius * scala.math.sin(thetaCW))
-        val outerCCWx = c + (outerRowRadius * scala.math.cos(thetaCCW))
-        val outerCCWy = c + (outerRowRadius * scala.math.sin(thetaCCW))
-        val outerCWx  = c + (outerRowRadius * scala.math.cos(thetaCW))
-        val outerCWy  = c + (outerRowRadius * scala.math.sin(thetaCW))
+        val innerCCWx = c + (innerRowRadius * Math.cos(thetaCCW))
+        val innerCCWy = c + (innerRowRadius * Math.sin(thetaCCW))
+        val innerCWx  = c + (innerRowRadius * Math.cos(thetaCW))
+        val innerCWy  = c + (innerRowRadius * Math.sin(thetaCW))
+        val outerCCWx = c + (outerRowRadius * Math.cos(thetaCCW))
+        val outerCCWy = c + (outerRowRadius * Math.sin(thetaCCW))
+        val outerCWx  = c + (outerRowRadius * Math.cos(thetaCW))
+        val outerCWy  = c + (outerRowRadius * Math.sin(thetaCW))
 
         val inwardWall    = new Line2D.Double(innerCCWx, innerCCWy, innerCWx, innerCWy)
         val outwardWall   = new Line2D.Double(outerCCWx, outerCCWy, outerCWx, outerCWy)
@@ -115,9 +115,8 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
         if (outwardCells.isEmpty) g.draw(outwardWall)
 
         if (cell == startingCell || cell.isEnd) {
-          val x = Math.ceil((innerCCWx + outerCCWx) / 2).toInt
-          val y = Math.ceil((innerCWy + outerCWy) / 2).toInt
-          g.fillOval(x, y, 10, 10)
+          g.draw(new Line2D.Double(innerCCWx, innerCCWy, outerCWx, outerCWy))
+          g.draw(new Line2D.Double(outerCCWx, outerCCWy, innerCWx, innerCWy))
         }
 
       }

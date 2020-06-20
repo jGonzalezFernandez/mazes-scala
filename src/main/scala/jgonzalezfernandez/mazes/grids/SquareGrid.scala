@@ -96,9 +96,8 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Reg
       if (westCellOpt.isEmpty) g.draw(westWall)
 
       if (cell == startingCell || cell.isEnd) {
-        g.setColor(Color.RED)
-        g.fillRect(x0, y0, 39, 39)
-        g.setColor(Color.BLACK)
+        g.draw(new Line2D.Double(x0, y0, x1, y1))
+        g.draw(new Line2D.Double(x1, y0, x0, y1))
       }
 
     }

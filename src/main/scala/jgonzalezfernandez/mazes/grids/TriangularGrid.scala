@@ -35,8 +35,8 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
     val halfHeight     = triangleHeight / 2.0
 
     // background size and color
-    val imgWidth  = (EDGE_SIZE * (columns.value + 1) / 2.0).toInt
-    val imgHeight = (triangleHeight * rows.value + 1).toInt
+    val imgWidth  = Math.ceil(EDGE_SIZE * (columns.value + 1) / 2.0).toInt
+    val imgHeight = Math.ceil(triangleHeight * rows.value + 1).toInt
     val canvas    = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB)
     val g         = canvas.createGraphics()
     g.setColor(Color.WHITE)

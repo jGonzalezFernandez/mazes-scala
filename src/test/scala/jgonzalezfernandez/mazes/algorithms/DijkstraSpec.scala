@@ -44,6 +44,7 @@ class DijkstraSpec extends AnyWordSpec {
       squareGrid.indexedCells(3)(2).linkTo(squareGrid.indexedCells(3)(1))
 
       Dijkstra.applyAlgorithm(squareGrid, Some(squareGrid.indexedCells(0)(0)))
+      println(squareGrid.toString(showDistances = true))
 
       assert(squareGrid.indexedCells(0)(0).distanceFromStart == 0)
       assert(squareGrid.indexedCells(0)(1).distanceFromStart == 1)
@@ -70,8 +71,6 @@ class DijkstraSpec extends AnyWordSpec {
       assert(squareGrid.indexedCells(4)(2).distanceFromStart == 12)
       assert(squareGrid.indexedCells(4)(3).distanceFromStart == 13)
       assert(squareGrid.indexedCells(4)(4).distanceFromStart == 14)
-
-      println(squareGrid.toString(showDistances = true))
 
     }
 
