@@ -1,9 +1,18 @@
 name := "mazes-scala"
 
-version := "0.2"
+version := "0.3"
 
 scalaVersion := "2.13.2"
 
-libraryDependencies += "eu.timepit" %% "refined" % "0.9.14"
+scalacOptions ++= Seq(
+  "-unchecked",
+  "-feature",
+  "-deprecation",
+  "-Xfatal-warnings"
+)
 
-scalacOptions += "-deprecation"
+libraryDependencies ++= Seq(
+  "eu.timepit"    %% "refined"    % "0.9.14",
+  "com.beachape"  %% "enumeratum" % "1.6.1",
+  "org.scalatest" %% "scalatest"  % "3.1.2" % "test"
+)
