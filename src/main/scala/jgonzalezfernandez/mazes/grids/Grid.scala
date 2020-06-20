@@ -1,5 +1,6 @@
 package jgonzalezfernandez.mazes.grids
 
+import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
 import jgonzalezfernandez.mazes.Utils._
@@ -27,6 +28,14 @@ trait Grid {
 }
 
 object Grid {
+
+  // makePng Helpers
+
+  def drawPoint(g: Graphics2D, cx: Double, cy: Double): Unit = {
+    val size     = 6
+    val halfSize = size / 2.0
+    g.fillOval(Math.ceil(cx - halfSize).toInt, Math.ceil(cy - halfSize).toInt, size, size)
+  }
 
   def writeImage(canvas: BufferedImage, fileName: String): Unit = {
     javax.imageio.ImageIO.write(canvas, "png", new java.io.File(s"PNGs/$fileName.png"))

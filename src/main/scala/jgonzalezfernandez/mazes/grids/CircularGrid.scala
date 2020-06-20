@@ -4,7 +4,7 @@ import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 
-import jgonzalezfernandez.mazes.Utils.PositiveInt
+import jgonzalezfernandez.mazes.Utils._
 import jgonzalezfernandez.mazes.grids.CircularGrid._
 
 import scala.collection.mutable.ArrayBuffer
@@ -66,16 +66,16 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
 
   def makePng(fileName: String): Unit = {
     /*
-     *                     outerCCW
+     *                          outerCCW
      *
-     *         innerCCW
-     *
-     *   c     innerCW     outerCW
+     *              innerCCW
+     *                       c
+     *   center     innerCW     outerCW
      */
-    val c = EDGE_SIZE * indexedCells.length
+    val center = EDGE_SIZE * indexedCells.length
 
     // background size and color
-    val imgSize = 2 * c + 1
+    val imgSize = 2 * center + 1
     val canvas  = new BufferedImage(imgSize, imgSize, BufferedImage.TYPE_INT_ARGB)
     val g       = canvas.createGraphics()
     g.setColor(Color.WHITE)
@@ -84,7 +84,8 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
     // walls
     g.setColor(Color.BLACK)
     allCells.foreach { cell =>
-      if (cell.row != 0 && cell.column != 0) { // Since the central cell has only outward neighbors, we skip it to avoid drawing its lateral boundary
+      if (cell == startingCell) Grid.drawPoint(g, center, center)
+      else { // We skip the central cell to avoid drawing its lateral boundary (since it only has outward neighbors)
         val innerRowRadius = EDGE_SIZE * cell.row
         val outerRowRadius = EDGE_SIZE * (cell.row + 1)
         val theta          = 2 * Math.PI / indexedCells(cell.row).length // cell angle size
@@ -93,14 +94,14 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
 
         // Perhaps we could work directly on the polar coordinate system using the angles and radii, but we are going to
         // calculate the Cartesian coordinates of the different points using trigonometry.
-        val innerCCWx = c + (innerRowRadius * Math.cos(thetaCCW))
-        val innerCCWy = c + (innerRowRadius * Math.sin(thetaCCW))
-        val innerCWx  = c + (innerRowRadius * Math.cos(thetaCW))
-        val innerCWy  = c + (innerRowRadius * Math.sin(thetaCW))
-        val outerCCWx = c + (outerRowRadius * Math.cos(thetaCCW))
-        val outerCCWy = c + (outerRowRadius * Math.sin(thetaCCW))
-        val outerCWx  = c + (outerRowRadius * Math.cos(thetaCW))
-        val outerCWy  = c + (outerRowRadius * Math.sin(thetaCW))
+        val innerCCWx = center + (innerRowRadius * Math.cos(thetaCCW))
+        val innerCCWy = center + (innerRowRadius * Math.sin(thetaCCW))
+        val innerCWx  = center + (innerRowRadius * Math.cos(thetaCW))
+        val innerCWy  = center + (innerRowRadius * Math.sin(thetaCW))
+        val outerCCWx = center + (outerRowRadius * Math.cos(thetaCCW))
+        val outerCCWy = center + (outerRowRadius * Math.sin(thetaCCW))
+        val outerCWx  = center + (outerRowRadius * Math.cos(thetaCW))
+        val outerCWy  = center + (outerRowRadius * Math.sin(thetaCW))
 
         val inwardWall    = new Line2D.Double(innerCCWx, innerCCWy, innerCWx, innerCWy)
         val outwardWall   = new Line2D.Double(outerCCWx, outerCCWy, outerCWx, outerCWy)
@@ -114,11 +115,13 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
         if (clockwiseOpt.isEmpty || !cell.isLinkedTo(clockwiseOpt.get)) g.draw(clockwiseWall)
         if (outwardCells.isEmpty) g.draw(outwardWall)
 
-        if (cell == startingCell || cell.isEnd) {
-          g.draw(new Line2D.Double(innerCCWx, innerCCWy, outerCWx, outerCWy))
-          g.draw(new Line2D.Double(outerCCWx, outerCCWy, innerCWx, innerCWy))
+        if (cell.isEnd) {
+          val thetaC  = midpoint(thetaCCW, thetaCW)
+          val radiusC = midpoint(innerRowRadius, outerRowRadius)
+          val cx      = center + (radiusC * Math.cos(thetaC))
+          val cy      = center + (radiusC * Math.sin(thetaC))
+          Grid.drawPoint(g, cx, cy)
         }
-
       }
     }
 

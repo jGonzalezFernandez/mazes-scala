@@ -85,6 +85,8 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
       if (southCellOpt.isEmpty) g.draw(southWall)
       if (northwestCellOpt.isEmpty) g.draw(northwestWall)
       if (southwestCellOpt.isEmpty) g.draw(southwestWall)
+
+      if (cell == startingCell || cell.isEnd) Grid.drawPoint(g, cx, cy)
     }
 
     g.dispose()

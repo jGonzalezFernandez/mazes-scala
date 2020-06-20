@@ -4,7 +4,7 @@ import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 
-import jgonzalezfernandez.mazes.Utils.PositiveInt
+import jgonzalezfernandez.mazes.Utils._
 import jgonzalezfernandez.mazes.grids.SquareGrid._
 
 final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation { // AKA Orthogonal grid
@@ -57,7 +57,7 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Reg
     /*
      *   x0.y0     x1.y0
      *
-     *
+     *          c
      *
      *   x0.y1     x1.y1
      */
@@ -95,11 +95,7 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Reg
       if (southCellOpt.isEmpty) g.draw(southWall)
       if (westCellOpt.isEmpty) g.draw(westWall)
 
-      if (cell == startingCell || cell.isEnd) {
-        g.draw(new Line2D.Double(x0, y0, x1, y1))
-        g.draw(new Line2D.Double(x1, y0, x0, y1))
-      }
-
+      if (cell == startingCell || cell.isEnd) Grid.drawPoint(g, midpoint(x0, x1), midpoint(y0, y1))
     }
 
     g.dispose()

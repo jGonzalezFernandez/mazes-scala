@@ -67,6 +67,8 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
       if (!isPointingUp(cell) && !northCellOpt.exists(cell.isLinkedTo)) g.draw(horizontalWall)
       if (eastCellOpt.isEmpty || !cell.isLinkedTo(eastCellOpt.get)) g.draw(eastWall)
       if (westCellOpt.isEmpty) g.draw(westWall)
+
+      if (cell == startingCell || cell.isEnd) Grid.drawPoint(g, cx, cy)
     }
 
     g.dispose()

@@ -7,8 +7,8 @@ import jgonzalezfernandez.mazes.grids.GridType
 object MazesApp {
 
   def main(args: Array[String]): Unit = {
-    val rows: PositiveInt    = 10
-    val columns: PositiveInt = 10
+    val rows: PositiveInt    = 13
+    val columns: PositiveInt = 13
 
     val gammaMaze = Maze(GridType.Square, GenerationAlgorithm.RecursiveBacktracker, rows, Some(columns))
     val sigmaMaze = Maze(GridType.Hexagonal, GenerationAlgorithm.RecursiveBacktracker, rows, Some(columns))
