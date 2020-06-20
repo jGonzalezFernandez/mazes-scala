@@ -16,10 +16,15 @@ final case class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorit
     case GridType.Circular   => CircularGrid(rows)
   }
 
-  private val maze: Grid = Dijkstra.applyAlgorithm(generationAlgorithm match {
-    case GenerationAlgorithm.RecursiveBacktracker => RecursiveBacktracker.applyAlgorithm(grid)
-    case GenerationAlgorithm.Random               => ???
-  })
+  private val maze: Grid = Dijkstra.applyAlgorithm(
+    generationAlgorithm match {
+      case GenerationAlgorithm.RecursiveBacktracker => RecursiveBacktracker.applyAlgorithm(grid)
+      case GenerationAlgorithm.Random               => ???
+    },
+    Some(grid.startingCell)
+  )
+  def max(a: Cell, b: Cell): Cell = if (a.distanceFromStart > b.distanceFromStart) a else b
+  maze.allCells.reduceLeft(max).isEnd = true
 
   def makePng(fileName: String): Unit = maze.makePng(fileName)
 

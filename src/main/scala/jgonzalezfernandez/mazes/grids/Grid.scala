@@ -8,15 +8,15 @@ trait Grid {
 
   def rows: PositiveInt
 
-  def gridCells: Vector[collection.IndexedSeq[Cell]]
+  def indexedCells: Vector[collection.IndexedSeq[Cell]]
 
-  def getCell(row: Int, column: Int): Option[Cell] = gridCells.lift(row).flatMap(_.lift(column))
+  lazy val allCells: Seq[Cell] = indexedCells.flatten
 
-  def getRandomCell: Cell = {
-    val randomRow    = random.nextInt(gridCells.length)
-    val randomColumn = random.nextInt(gridCells(randomRow).length)
-    gridCells(randomRow)(randomColumn)
-  }
+  def startingCell: Cell
+
+  def getCell(row: Int, column: Int): Option[Cell] = indexedCells.lift(row).flatMap(_.lift(column))
+
+  def getRandomCell: Cell = allCells(random.nextInt(allCells.size))
 
   def getRandomCell(cells: collection.Seq[Cell]): Option[Cell] = if (cells.isEmpty) None else Some(cells(random.nextInt(cells.size)))
 

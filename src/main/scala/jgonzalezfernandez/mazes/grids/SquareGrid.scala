@@ -19,6 +19,40 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Reg
 
   def getNeighboursOf(cell: Cell): Seq[Cell] = Seq(getNorthCellOf(cell), getSouthCellOf(cell), getEastCellOf(cell), getWestCellOf(cell)).flatten
 
+  def toString(showDistances: Boolean): String = {
+    val corner         = "+"
+    val horizontalWall = "----"
+    val fourSpaces     = "    "
+    val verticalWall   = "|"
+    val space          = " "
+
+    var output    = corner + s"$horizontalWall$corner" * columns.value + "\n"
+    var topRow    = ""
+    var bottomRow = ""
+
+    for (row <- 0 until rows.value; column <- 0 until columns.value) {
+      val cell         = indexedCells(row)(column)
+      val southCellOpt = getSouthCellOf(cell)
+      val eastCellOpt  = getEastCellOf(cell)
+
+      lazy val distance = "%02d".format(cell.distanceFromStart)
+      val body          = if (showDistances) s"$space$distance$space" else fourSpaces
+      val eastWall      = if (eastCellOpt.isEmpty || !cell.isLinkedTo(eastCellOpt.get)) verticalWall else space
+      val southWall     = if (southCellOpt.isEmpty || !cell.isLinkedTo(southCellOpt.get)) horizontalWall else fourSpaces
+
+      topRow += s"$body$eastWall"
+      bottomRow += s"$southWall$corner"
+
+      if (eastCellOpt.isEmpty) { // Once we reach the end of the row, we assemble it and add it to the output
+        output += s"$verticalWall$topRow\n$corner$bottomRow\n"
+        topRow = ""
+        bottomRow = ""
+      }
+    }
+
+    output
+  }
+
   def makePng(fileName: String): Unit = {
     /*
      *   x0.y0     x1.y0
@@ -38,31 +72,30 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Reg
 
     // walls
     g.setColor(Color.BLACK)
-    for (row <- 0 until rows.value; column <- 0 until columns.value) {
-      val x0 = EDGE_SIZE * column
-      val y0 = EDGE_SIZE * row
-      val x1 = EDGE_SIZE * (column + 1)
-      val y1 = EDGE_SIZE * (row + 1)
+    allCells.foreach { cell =>
+      val x0 = EDGE_SIZE * cell.column
+      val y0 = EDGE_SIZE * cell.row
+      val x1 = EDGE_SIZE * (cell.column + 1)
+      val y1 = EDGE_SIZE * (cell.row + 1)
 
       val northWall = new Line2D.Double(x0, y0, x1, y0)
       val southWall = new Line2D.Double(x0, y1, x1, y1)
       val eastWall  = new Line2D.Double(x1, y0, x1, y1)
       val westWall  = new Line2D.Double(x0, y0, x0, y1)
 
-      val currentCell  = gridCells(row)(column)
-      val northCellOpt = getNorthCellOf(currentCell)
-      val southCellOpt = getSouthCellOf(currentCell)
-      val eastCellOpt  = getEastCellOf(currentCell)
-      val westCellOpt  = getWestCellOf(currentCell)
+      val northCellOpt = getNorthCellOf(cell)
+      val southCellOpt = getSouthCellOf(cell)
+      val eastCellOpt  = getEastCellOf(cell)
+      val westCellOpt  = getWestCellOf(cell)
 
       // Since cells share walls, we don't need to draw all of them for each one:
-      if (northCellOpt.isEmpty || !currentCell.isLinkedTo(northCellOpt.get)) g.draw(northWall)
-      if (eastCellOpt.isEmpty || !currentCell.isLinkedTo(eastCellOpt.get)) g.draw(eastWall)
+      if (northCellOpt.isEmpty || !cell.isLinkedTo(northCellOpt.get)) g.draw(northWall)
+      if (eastCellOpt.isEmpty || !cell.isLinkedTo(eastCellOpt.get)) g.draw(eastWall)
       // But then we must not forget the missing outer walls (in this case, the southern and western boundaries):
       if (southCellOpt.isEmpty) g.draw(southWall)
       if (westCellOpt.isEmpty) g.draw(westWall)
 
-      if (currentCell.isStart || currentCell.isEnd) {
+      if (cell == startingCell || cell.isEnd) {
         g.setColor(Color.RED)
         g.fillRect(x0, y0, 39, 39)
         g.setColor(Color.BLACK)

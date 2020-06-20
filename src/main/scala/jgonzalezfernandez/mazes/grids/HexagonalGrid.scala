@@ -51,10 +51,10 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
 
     // walls
     g.setColor(Color.BLACK)
-    for (row <- 0 until rows.value; column <- 0 until columns.value) {
-      val cx = 3 * aQuarterWidth * column + EDGE_SIZE
-      var cy = hexagonHeight * row + halfHeight
-      if (!isEven(column)) cy += halfHeight
+    allCells.foreach { cell =>
+      val cx = 3 * aQuarterWidth * cell.column + EDGE_SIZE
+      var cy = hexagonHeight * cell.row + halfHeight
+      if (!isEven(cell.column)) cy += halfHeight
 
       val x0 = cx - EDGE_SIZE
       val x1 = cx - aQuarterWidth
@@ -72,17 +72,16 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
       val northwestWall = new Line2D.Double(x0, y1, x1, y0)
       val southwestWall = new Line2D.Double(x0, y1, x1, y2)
 
-      val currentCell      = gridCells(row)(column)
-      val northCellOpt     = getNorthCellOf(currentCell)
-      val southCellOpt     = getSouthCellOf(currentCell)
-      val northeastCellOpt = getNortheastCellOf(currentCell)
-      val southeastCellOpt = getSoutheastCellOf(currentCell)
-      val northwestCellOpt = getNorthwestCellOf(currentCell)
-      val southwestCellOpt = getSouthwestCellOf(currentCell)
+      val northCellOpt     = getNorthCellOf(cell)
+      val southCellOpt     = getSouthCellOf(cell)
+      val northeastCellOpt = getNortheastCellOf(cell)
+      val southeastCellOpt = getSoutheastCellOf(cell)
+      val northwestCellOpt = getNorthwestCellOf(cell)
+      val southwestCellOpt = getSouthwestCellOf(cell)
 
-      if (northCellOpt.isEmpty || !currentCell.isLinkedTo(northCellOpt.get)) g.draw(northWall)
-      if (northeastCellOpt.isEmpty || !currentCell.isLinkedTo(northeastCellOpt.get)) g.draw(northeastWall)
-      if (southeastCellOpt.isEmpty || !currentCell.isLinkedTo(southeastCellOpt.get)) g.draw(southeastWall)
+      if (northCellOpt.isEmpty || !cell.isLinkedTo(northCellOpt.get)) g.draw(northWall)
+      if (northeastCellOpt.isEmpty || !cell.isLinkedTo(northeastCellOpt.get)) g.draw(northeastWall)
+      if (southeastCellOpt.isEmpty || !cell.isLinkedTo(southeastCellOpt.get)) g.draw(southeastWall)
       if (southCellOpt.isEmpty) g.draw(southWall)
       if (northwestCellOpt.isEmpty) g.draw(northwestWall)
       if (southwestCellOpt.isEmpty) g.draw(southwestWall)
