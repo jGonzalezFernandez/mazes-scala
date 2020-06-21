@@ -25,11 +25,17 @@ trait Grid {
 
   def makePng(fileName: String): Unit
 
+  // Required by the Binary Tree and Sidewinder algorithms:
+
+  def getNorthCellOf(cell: Cell): Option[Cell] = getCell(cell.row - 1, cell.column)
+
+  def getEastCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column + 1)
+
 }
 
 object Grid {
 
-  // makePng Helpers
+  // makePng Helpers:
 
   def drawPoint(g: Graphics2D, cx: Double, cy: Double): Unit = {
     val size     = 6

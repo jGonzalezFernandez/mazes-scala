@@ -13,8 +13,6 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
 
   private def getSouthRow(cell: Cell): Int = if (isEven(cell.column)) cell.row else cell.row + 1
 
-  def getNorthCellOf(cell: Cell): Option[Cell] = getCell(cell.row - 1, cell.column)
-
   def getSouthCellOf(cell: Cell): Option[Cell] = getCell(cell.row + 1, cell.column)
 
   def getNortheastCellOf(cell: Cell): Option[Cell] = getCell(getNorthRow(cell), cell.column + 1)

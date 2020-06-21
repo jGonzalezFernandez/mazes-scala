@@ -11,11 +11,9 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
 
   private def isPointingUp(cell: Cell) = isEven(cell.row + cell.column)
 
-  def getNorthCellOf(cell: Cell): Option[Cell] = if (isPointingUp(cell)) None else getCell(cell.row - 1, cell.column)
+  override def getNorthCellOf(cell: Cell): Option[Cell] = if (isPointingUp(cell)) None else getCell(cell.row - 1, cell.column)
 
   def getSouthCellOf(cell: Cell): Option[Cell] = if (!isPointingUp(cell)) None else getCell(cell.row + 1, cell.column)
-
-  def getEastCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column + 1)
 
   def getWestCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column - 1)
 

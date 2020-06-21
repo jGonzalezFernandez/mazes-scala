@@ -64,6 +64,10 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
   def getNeighboursOf(cell: Cell): Seq[Cell] =
     getOutwardsCellsOf(cell) ++ Seq(getInwardCellOf(cell), getClockwiseCellOf(cell), getCounterClockwiseCellOf(cell)).flatten
 
+  override def getNorthCellOf(cell: Cell): Option[Cell] = getInwardCellOf(cell)
+
+  override def getEastCellOf(cell: Cell): Option[Cell] = getClockwiseCellOf(cell)
+
   def makePng(fileName: String): Unit = {
     /*
      *                          outerCCW
