@@ -10,6 +10,7 @@ object GenerationAlgorithm extends Enum[GenerationAlgorithm] {
 
   case object RecursiveBacktracker extends GenerationAlgorithm
   case object BinaryTree           extends GenerationAlgorithm
+  case object Sidewinder           extends GenerationAlgorithm
   case object Random               extends GenerationAlgorithm
 
 }

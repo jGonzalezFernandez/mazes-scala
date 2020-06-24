@@ -1,7 +1,7 @@
 package jgonzalezfernandez.mazes
 
 import jgonzalezfernandez.mazes.Utils.PositiveInt
-import jgonzalezfernandez.mazes.algorithms.{BinaryTree, Dijkstra, GenerationAlgorithm, RecursiveBacktracker}
+import jgonzalezfernandez.mazes.algorithms._
 import jgonzalezfernandez.mazes.grids._
 
 /** @param rows used to determine the full size of the grid if columnsOpt is empty
@@ -20,6 +20,7 @@ final case class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorit
     generationAlgorithm match {
       case GenerationAlgorithm.RecursiveBacktracker => RecursiveBacktracker.applyAlgorithm(grid)
       case GenerationAlgorithm.BinaryTree           => BinaryTree.applyAlgorithm(grid)
+      case GenerationAlgorithm.Sidewinder           => Sidewinder.applyAlgorithm(grid)
       case GenerationAlgorithm.Random               => ???
     },
     Some(grid.startingCell)

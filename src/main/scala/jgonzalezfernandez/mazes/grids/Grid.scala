@@ -17,9 +17,9 @@ trait Grid {
 
   def getCell(row: Int, column: Int): Option[Cell] = indexedCells.lift(row).flatMap(_.lift(column))
 
-  def getRandomCell: Cell = allCells(random.nextInt(allCells.size))
+  def getRandomCell: Cell = allCells(randomInt(allCells.length))
 
-  def getRandomCell(cells: collection.Seq[Cell]): Option[Cell] = if (cells.isEmpty) None else Some(cells(random.nextInt(cells.size)))
+  def getRandomCell(cells: collection.Seq[Cell]): Option[Cell] = if (cells.isEmpty) None else Some(cells(randomInt(cells.length)))
 
   def getNeighboursOf(cell: Cell): Seq[Cell]
 

@@ -9,6 +9,8 @@ object Utils {
 
   val random = new scala.util.Random
 
+  def randomInt(maxExclusive: Int): Int = random.nextInt(maxExclusive)
+
   def midpoint(a: Double, b: Double): Double = (a + b) / 2
 
   def isEven(int: Int): Boolean = int % 2 == 0
