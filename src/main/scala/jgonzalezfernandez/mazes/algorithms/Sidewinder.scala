@@ -11,12 +11,14 @@ object Sidewinder extends Algorithm {
 
     def randomlyCloseRun: Boolean = randomInt(2) == 0
 
-    def closeRun(run: ArrayBuffer[Cell]): Unit = {
-      val randomCandidate    = grid.getRandomCell(run).get
-      val randomNorthCellOpt = grid.getNorthCellOf(randomCandidate)
-      randomNorthCellOpt.foreach(randomCandidate.linkTo)
-      run.clear()
-    }
+    def closeRun(run: ArrayBuffer[Cell]): Unit =
+      for {
+        randomCandidate <- grid.getRandomCell(run)
+        randomNorthCell <- grid.getNorthCellOf(randomCandidate)
+      } {
+        randomCandidate.linkTo(randomNorthCell)
+        run.clear()
+      }
 
     val run = ArrayBuffer.empty[Cell]
 
@@ -26,7 +28,7 @@ object Sidewinder extends Algorithm {
         val northCellOpt = grid.getNorthCellOf(currentCell)
         val eastCellOpt  = grid.getEastCellOf(currentCell)
 
-        run += currentCell
+        if (northCellOpt.nonEmpty) run += currentCell // a little hack to improve the output on triangular grids
 
         (northCellOpt, eastCellOpt) match {
           case (None, Some(eastCell))    => currentCell.linkTo(eastCell)
