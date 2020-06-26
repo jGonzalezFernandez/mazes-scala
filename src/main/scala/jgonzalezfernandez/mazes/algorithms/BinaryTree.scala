@@ -2,7 +2,7 @@ package jgonzalezfernandez.mazes.algorithms
 
 import jgonzalezfernandez.mazes.grids.{Cell, Grid}
 
-object BinaryTree extends Algorithm {
+object BinaryTree extends Algorithm[Grid] {
 
   def applyAlgorithm(grid: Grid, startingPositionOpt: Option[Cell]): Grid = {
 

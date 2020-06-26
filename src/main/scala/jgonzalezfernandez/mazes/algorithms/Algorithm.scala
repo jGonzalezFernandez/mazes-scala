@@ -2,8 +2,8 @@ package jgonzalezfernandez.mazes.algorithms
 
 import jgonzalezfernandez.mazes.grids.{Cell, Grid}
 
-trait Algorithm {
+trait Algorithm[T <: Grid] {
 
-  def applyAlgorithm(grid: Grid, startingPositionOpt: Option[Cell] = None): Grid
+  def applyAlgorithm(grid: T, startingPositionOpt: Option[Cell] = None): Grid
 
 }

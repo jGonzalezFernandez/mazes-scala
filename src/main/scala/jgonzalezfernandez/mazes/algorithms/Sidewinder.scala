@@ -5,7 +5,7 @@ import jgonzalezfernandez.mazes.grids.{Cell, Grid}
 
 import scala.collection.mutable.ArrayBuffer
 
-object Sidewinder extends Algorithm {
+object Sidewinder extends Algorithm[Grid] {
 
   def applyAlgorithm(grid: Grid, startingPositionOpt: Option[Cell]): Grid = {
 
