@@ -1,23 +1,21 @@
 import eu.timepit.refined.auto._
 import jgonzalezfernandez.mazes.Maze
-import jgonzalezfernandez.mazes.Utils.PositiveInt
 import jgonzalezfernandez.mazes.algorithms.GenerationAlgorithm
 import jgonzalezfernandez.mazes.grids.GridType
 
 object MazesApp {
 
   def main(args: Array[String]): Unit = {
-    val rows: PositiveInt    = 20
-    val columns: PositiveInt = 20
 
-    val deltaMaze = Maze(GridType.Triangular, GenerationAlgorithm.RecursiveBacktracker, rows, Some(columns))
-    val gammaMaze = Maze(GridType.Square, GenerationAlgorithm.RecursiveDivision, rows, Some(columns))
-    val sigmaMaze = Maze(GridType.Hexagonal, GenerationAlgorithm.Sidewinder, rows, Some(columns))
-    val thetaMaze = Maze(GridType.Circular, GenerationAlgorithm.BinaryTree, rows)
+    val deltaMaze = Maze(GridType.Triangular, GenerationAlgorithm.Random, 25, Some(62))
+    val gammaMaze = Maze(GridType.Square, GenerationAlgorithm.RecursiveDivision, 25, Some(36))
+    val sigmaMaze = Maze(GridType.Hexagonal, GenerationAlgorithm.Random, 17, Some(29))
+    val thetaMaze = Maze(GridType.Circular, GenerationAlgorithm.Random, 12)
 
     deltaMaze.makePng("deltaMaze")
     gammaMaze.makePng("gammaMaze")
     sigmaMaze.makePng("sigmaMaze")
     thetaMaze.makePng("thetaMaze")
+
   }
 }

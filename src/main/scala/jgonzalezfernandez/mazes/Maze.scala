@@ -1,14 +1,14 @@
 package jgonzalezfernandez.mazes
 
-import jgonzalezfernandez.mazes.Utils.PositiveInt
+import jgonzalezfernandez.mazes.Utils.{PositiveInt, randomInt}
 import jgonzalezfernandez.mazes.algorithms._
 import jgonzalezfernandez.mazes.grids._
 
-/** Triangular grid + Sidewinder: discouraged.
+/** Triangular grid + Sidewinder: discouraged (although it could work).
   * Triangular grid + BinaryTree: strongly discouraged.
-  * RecursiveDivision: only available for the Square grid.
-  * @param rows used to determine the full size of the grid if columnsOpt is empty
-  * @param columnsOpt always ignored when using a circular grid
+  * RecursiveDivision: currently only available for the Square grid (so it's never chosen when using Random).
+  * @param rows used to determine the full size of the grid if columnsOpt is empty.
+  * @param columnsOpt always ignored when using a circular grid.
   */
 final case class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorithm, rows: PositiveInt, columnsOpt: Option[PositiveInt] = None) {
 
@@ -22,13 +22,15 @@ final case class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorit
     case GridType.Triangular => TriangularGrid(rows, columnsOpt.getOrElse(rows))
   }
 
+  private val universalAlgorithms = Seq(BinaryTree, RecursiveBacktracker, Sidewinder)
+
   private val maze: Grid = Dijkstra.applyAlgorithm(
     generationAlgorithm match {
       case GenerationAlgorithm.BinaryTree           => BinaryTree.applyAlgorithm(grid)
       case GenerationAlgorithm.RecursiveBacktracker => RecursiveBacktracker.applyAlgorithm(grid)
       case GenerationAlgorithm.RecursiveDivision    => RecursiveDivision.applyAlgorithm(grid.asInstanceOf[SquareGrid])
       case GenerationAlgorithm.Sidewinder           => Sidewinder.applyAlgorithm(grid)
-      case GenerationAlgorithm.Random               => ???
+      case GenerationAlgorithm.Random               => universalAlgorithms(randomInt(universalAlgorithms.length)).applyAlgorithm(grid)
     },
     Some(grid.startingCell)
   )
