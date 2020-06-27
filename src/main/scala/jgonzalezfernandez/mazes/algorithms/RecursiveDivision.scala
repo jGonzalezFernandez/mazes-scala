@@ -3,23 +3,20 @@ package jgonzalezfernandez.mazes.algorithms
 import jgonzalezfernandez.mazes.Utils.randomInt
 import jgonzalezfernandez.mazes.grids.{Cell, Grid, SquareGrid}
 
+// TODO: generalize these functions to work with any type of grid
+// TODO: make the divide def tail recursive
 object RecursiveDivision extends Algorithm[SquareGrid] {
 
-  // TODO: generalize this implementation to work with any type of grid
-  def applyAlgorithm(grid: SquareGrid, startingPositionOpt: Option[Cell]): Grid = {
+  // Since we are going to recursively divide a single grid by adding walls, for each iteration it is necessary to delimit the
+  // area of the grid in which we are going to work (row + height = vertical limit, and column + width = horizontal limit).
+  def divide(grid: SquareGrid, row: Int, column: Int, height: Int, width: Int): Grid = {
 
-    def divide(grid: Grid, row: Int, column: Int, height: Int, width: Int): Grid = {
-      if (height <= 1 || width <= 1) grid
-      else if (height > width) divideHorizontally(grid, row, column, height, width)
-      else divideVertically(grid, row, column, height, width)
-    }
+    def horizontalCut: Grid = {
+      val cutPosition     = randomInt(height - 1)
+      val passagePosition = randomInt(width)
 
-    def divideHorizontally(grid: Grid, row: Int, column: Int, height: Int, width: Int): Grid = {
-      val cutPosition = randomInt(height - 1)
-      val passageAt   = randomInt(width)
-
-      for (x <- 0.until(width)) {
-        if (x != passageAt) {
+      for (x <- 0 until width) {
+        if (x != passagePosition) {
           val currentCell = grid.indexedCells(row + cutPosition)(column + x)
           grid.getSouthCellOf(currentCell).foreach(southCell => currentCell.unlinkFrom(southCell))
         }
@@ -29,12 +26,12 @@ object RecursiveDivision extends Algorithm[SquareGrid] {
       divide(grid, row + cutPosition + 1, column, height - cutPosition - 1, width)
     }
 
-    def divideVertically(grid: Grid, row: Int, column: Int, height: Int, width: Int): Grid = {
-      val cutPosition = randomInt(width - 1)
-      val passageAt   = randomInt(height)
+    def verticalCut: Grid = {
+      val cutPosition     = randomInt(width - 1)
+      val passagePosition = randomInt(height)
 
-      for (y <- 0.until(height)) {
-        if (y != passageAt) {
+      for (y <- 0 until height) {
+        if (y != passagePosition) {
           val currentCell = grid.indexedCells(row + y)(column + cutPosition)
           grid.getEastCellOf(currentCell).foreach(eastCell => currentCell.unlinkFrom(eastCell))
         }
@@ -44,9 +41,17 @@ object RecursiveDivision extends Algorithm[SquareGrid] {
       divide(grid, row, column + cutPosition + 1, height, width - cutPosition - 1)
     }
 
+    def randomlyBuildRoom: Boolean = height < 5 && width < 5 && randomInt(4) == 0
+
+    if (height <= 1 || width <= 1 || randomlyBuildRoom) grid // recursion stops
+    else if (height > width) horizontalCut                   // we could have chosen at random, but using the aspect ratio gives better results
+    else verticalCut
+  }
+
+  def applyAlgorithm(grid: SquareGrid, startingPositionOpt: Option[Cell]): Grid = {
     grid.allCells.foreach { cell =>
       val neighbours = grid.getNeighboursOf(cell)
-      neighbours.foreach(cell.linkTo(_, reciprocal = false)) // since we are iterating over all cells, we don't need to establish bidirectional links
+      neighbours.foreach(cell.linkTo(_, reciprocal = false)) // we're iterating over all the cells, so we don't need to link them bilaterally
     }
 
     divide(grid, 0, 0, grid.rows.value, grid.columns.value)
