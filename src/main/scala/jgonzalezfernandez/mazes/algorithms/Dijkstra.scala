@@ -4,7 +4,7 @@ import jgonzalezfernandez.mazes.grids.{Cell, Grid}
 
 import scala.collection.mutable
 
-object Dijkstra extends Algorithm {
+object Dijkstra extends Algorithm[Grid] {
 
   def applyAlgorithm(grid: Grid, startingPositionOpt: Option[Cell]): Grid = {
     val startingPosition = startingPositionOpt.getOrElse(grid.getRandomCell)

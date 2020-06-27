@@ -17,11 +17,19 @@ trait Grid {
 
   def getCell(row: Int, column: Int): Option[Cell] = indexedCells.lift(row).flatMap(_.lift(column))
 
-  def getRandomCell: Cell = allCells(random.nextInt(allCells.size))
+  def getNorthCellOf(cell: Cell): Option[Cell] = getCell(cell.row - 1, cell.column)
 
-  def getRandomCell(cells: collection.Seq[Cell]): Option[Cell] = if (cells.isEmpty) None else Some(cells(random.nextInt(cells.size)))
+  def getSouthCellOf(cell: Cell): Option[Cell] = getCell(cell.row + 1, cell.column)
 
-  def getNeighboursOf(cell: Cell): Seq[Cell]
+  def getEastCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column + 1)
+
+  def getWestCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column - 1)
+
+  def getNeighboursOf(cell: Cell): Seq[Cell] = Seq(getNorthCellOf(cell), getSouthCellOf(cell), getEastCellOf(cell), getWestCellOf(cell)).flatten
+
+  def getRandomCell: Cell = allCells(randomInt(allCells.length))
+
+  def getRandomCell(cells: collection.Seq[Cell]): Option[Cell] = if (cells.isEmpty) None else Some(cells(randomInt(cells.length)))
 
   def makePng(fileName: String): Unit
 
@@ -29,7 +37,7 @@ trait Grid {
 
 object Grid {
 
-  // makePng Helpers
+  // makePng Helpers:
 
   def drawPoint(g: Graphics2D, cx: Double, cy: Double): Unit = {
     val size     = 6

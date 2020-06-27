@@ -9,16 +9,6 @@ import jgonzalezfernandez.mazes.grids.SquareGrid._
 
 final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation { // AKA Orthogonal grid
 
-  def getNorthCellOf(cell: Cell): Option[Cell] = getCell(cell.row - 1, cell.column)
-
-  def getSouthCellOf(cell: Cell): Option[Cell] = getCell(cell.row + 1, cell.column)
-
-  def getEastCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column + 1)
-
-  def getWestCellOf(cell: Cell): Option[Cell] = getCell(cell.row, cell.column - 1)
-
-  def getNeighboursOf(cell: Cell): Seq[Cell] = Seq(getNorthCellOf(cell), getSouthCellOf(cell), getEastCellOf(cell), getWestCellOf(cell)).flatten
-
   def toString(showDistances: Boolean): String = {
     val corner         = "+"
     val horizontalWall = "----"

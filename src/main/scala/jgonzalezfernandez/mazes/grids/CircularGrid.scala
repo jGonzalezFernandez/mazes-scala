@@ -61,8 +61,14 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar gri
   def getCounterClockwiseCellOf(cell: Cell): Option[Cell] =
     if (cell.column == 0) getCell(cell.row, indexedCells(cell.row).length - 1) else getCell(cell.row, cell.column - 1)
 
-  def getNeighboursOf(cell: Cell): Seq[Cell] =
+  override def getNeighboursOf(cell: Cell): Seq[Cell] =
     getOutwardsCellsOf(cell) ++ Seq(getInwardCellOf(cell), getClockwiseCellOf(cell), getCounterClockwiseCellOf(cell)).flatten
+
+  // Required by the Binary Tree and Sidewinder algorithms:
+
+  override def getNorthCellOf(cell: Cell): Option[Cell] = getInwardCellOf(cell)
+
+  override def getEastCellOf(cell: Cell): Option[Cell] = getClockwiseCellOf(cell)
 
   def makePng(fileName: String): Unit = {
     /*
