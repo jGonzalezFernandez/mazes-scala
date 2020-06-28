@@ -9,9 +9,9 @@ import jgonzalezfernandez.mazes.grids.CircularGrid._
 
 import scala.collection.mutable.ArrayBuffer
 
-final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA polar grid
+final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA Polar grid
 
-  /* In a polar grid, each row is delimited by a pair of concentric circles. Therefore, if we were to use a matrix to
+  /* In a Polar grid, each row is delimited by a pair of concentric circles. Therefore, if we were to use a matrix to
    * represent the different cells of the maze, the outer ones would have to be much wider than the inner ones.
    * But we want each cell to be about the same height and width.
    * Hence, we need to build a jagged array and put more cells in the outer rows than in the inner rows.

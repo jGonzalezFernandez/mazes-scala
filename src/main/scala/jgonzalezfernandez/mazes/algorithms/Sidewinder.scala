@@ -28,7 +28,7 @@ object Sidewinder extends Algorithm[Grid] {
         val northCellOpt = grid.getNorthCellOf(currentCell)
         val eastCellOpt  = grid.getEastCellOf(currentCell)
 
-        if (northCellOpt.nonEmpty) run += currentCell // a little hack to improve the output on triangular grids
+        if (northCellOpt.nonEmpty) run += currentCell // a little hack to improve the output on Triangular grids
 
         (northCellOpt, eastCellOpt) match {
           case (None, Some(eastCell))    => currentCell.linkTo(eastCell)
