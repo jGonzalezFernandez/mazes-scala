@@ -20,4 +20,6 @@ final case class Cell(row: Int, column: Int) {
 
   def isLinkedTo(cell: Cell): Boolean = links.contains(cell) // directly linked
 
+  def linkCount: Int = links.size
+
 }
