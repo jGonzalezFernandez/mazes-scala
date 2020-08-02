@@ -51,7 +51,7 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA Polar gri
       indexedCells.lift(cell.row + 1).map(_.length / indexedCells(cell.row).length) match {
         case None                      => Seq()
         case Some(ratio) if ratio == 2 => Seq(getCell(cell.row + 1, cell.column * ratio), getCell(cell.row + 1, cell.column * ratio + 1)).flatten
-        case _                         => Seq(getCell(cell.row + 1, cell.column)).flatten // ratio == 1
+        case _                         => getCell(cell.row + 1, cell.column).toSeq // ratio == 1
       }
   }
 
