@@ -23,17 +23,16 @@ object Sidewinder extends Algorithm[Grid] {
     val run = ArrayBuffer.empty[Cell]
 
     for (row <- grid.indexedCells.indices) {
-      for (column <- grid.indexedCells(row).indices) {
-        val currentCell  = grid.indexedCells(row)(column)
-        val northCellOpt = grid.getNorthCellOf(currentCell)
-        val eastCellOpt  = grid.getEastCellOf(currentCell)
+      for (cell <- grid.indexedCells(row)) {
+        val northCellOpt = grid.getNorthCellOf(cell)
+        val eastCellOpt  = grid.getEastCellOf(cell)
 
-        if (northCellOpt.nonEmpty) run += currentCell // a little hack to improve the output on Triangular grids
+        if (northCellOpt.nonEmpty) run += cell // a little hack to improve the output on Triangular grids
 
         (northCellOpt, eastCellOpt) match {
-          case (None, Some(eastCell))    => currentCell.linkTo(eastCell)
+          case (None, Some(eastCell))    => cell.linkTo(eastCell)
           case (_, None)                 => closeRun(run)
-          case (Some(_), Some(eastCell)) => if (randomlyCloseRun) closeRun(run) else currentCell.linkTo(eastCell)
+          case (Some(_), Some(eastCell)) => if (randomlyCloseRun) closeRun(run) else cell.linkTo(eastCell)
         }
       }
     }
