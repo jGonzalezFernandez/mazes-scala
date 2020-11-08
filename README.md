@@ -4,4 +4,4 @@ A little project I did for fun to play with my daughter, based on the book Mazes
 
 The code (or, rather, the overall design of the project) is not very functional, but it does the job and is straightforward.
 
-Related: **Rogue-Maze**
+Related: **rogue-maze**
