@@ -1,11 +1,12 @@
 package jgonzalezfernandez.mazes.grids
 
+import jgonzalezfernandez.mazes.Utils._
+import jgonzalezfernandez.mazes.grids.SquareGrid._
+
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
-
-import jgonzalezfernandez.mazes.Utils._
-import jgonzalezfernandez.mazes.grids.SquareGrid._
+import java.io.File
 
 final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation { // AKA Orthogonal grid
 
@@ -43,7 +44,7 @@ final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends Reg
     output
   }
 
-  def makePng(fileName: String): Unit = {
+  def makePng(fileName: String): File = {
     /*
      *   x0.y0     x1.y0
      *

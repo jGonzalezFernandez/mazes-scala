@@ -1,9 +1,10 @@
 package jgonzalezfernandez.mazes.grids
 
+import jgonzalezfernandez.mazes.Utils._
+
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
-
-import jgonzalezfernandez.mazes.Utils._
+import java.io.File
 
 trait Grid {
 
@@ -31,7 +32,7 @@ trait Grid {
 
   def getRandomCell(cells: collection.Seq[Cell]): Option[Cell] = if (cells.isEmpty) None else Some(cells(randomInt(cells.length)))
 
-  def makePng(fileName: String): Unit
+  def makePng(fileName: String): File
 
 }
 
@@ -45,8 +46,10 @@ object Grid {
     g.fillOval(Math.ceil(cx - halfSize).toInt, Math.ceil(cy - halfSize).toInt, size, size)
   }
 
-  def writeImage(canvas: BufferedImage, fileName: String): Unit = {
-    javax.imageio.ImageIO.write(canvas, "png", new java.io.File(s"PNGs/$fileName.png"))
+  def writeImage(canvas: BufferedImage, fileName: String): File = {
+    val file = new java.io.File(s"PNGs/$fileName.png")
+    javax.imageio.ImageIO.write(canvas, "png", file)
+    file
   }
 
 }

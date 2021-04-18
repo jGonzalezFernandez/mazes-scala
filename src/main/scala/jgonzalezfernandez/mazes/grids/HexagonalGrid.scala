@@ -1,11 +1,12 @@
 package jgonzalezfernandez.mazes.grids
 
+import jgonzalezfernandez.mazes.Utils._
+import jgonzalezfernandez.mazes.grids.HexagonalGrid._
+
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
-
-import jgonzalezfernandez.mazes.Utils._
-import jgonzalezfernandez.mazes.grids.HexagonalGrid._
+import java.io.File
 
 final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation {
 
@@ -24,7 +25,7 @@ final case class HexagonalGrid(rows: PositiveInt, columns: PositiveInt) extends 
   override def getNeighboursOf(cell: Cell): Seq[Cell] =
     Seq(getNorthCellOf(cell), getSouthCellOf(cell), getNortheastCellOf(cell), getSoutheastCellOf(cell), getNorthwestCellOf(cell), getSouthwestCellOf(cell)).flatten
 
-  def makePng(fileName: String): Unit = {
+  def makePng(fileName: String): File = {
     /*
      *      x1.y0     x2.y0
      *

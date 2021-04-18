@@ -1,11 +1,12 @@
 package jgonzalezfernandez.mazes.grids
 
+import jgonzalezfernandez.mazes.Utils._
+import jgonzalezfernandez.mazes.grids.TriangularGrid._
+
 import java.awt.Color
 import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
-
-import jgonzalezfernandez.mazes.Utils._
-import jgonzalezfernandez.mazes.grids.TriangularGrid._
+import java.io.File
 
 final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation {
 
@@ -15,7 +16,7 @@ final case class TriangularGrid(rows: PositiveInt, columns: PositiveInt) extends
 
   override def getSouthCellOf(cell: Cell): Option[Cell] = if (!isPointingUp(cell)) None else getCell(cell.row + 1, cell.column)
 
-  def makePng(fileName: String): Unit = {
+  def makePng(fileName: String): File = {
     /*
      *        x1.y0        ||   x0.y1     x2.y1
      *                     ||

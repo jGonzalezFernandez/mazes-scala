@@ -5,6 +5,8 @@ import jgonzalezfernandez.mazes.Utils.{PositiveInt, randomInt}
 import jgonzalezfernandez.mazes.algorithms._
 import jgonzalezfernandez.mazes.grids._
 
+import java.io.File
+
 /** Triangular grid + BinaryTree or Sidewinder: not recommended (since unreachable areas will probably be generated), although it can be done.
   * RecursiveDivision: currently only available for the Square grid (so it's never chosen when using Random).
   * @param rows used to determine the full size of the grid if columnsOpt is empty.
@@ -53,7 +55,7 @@ final case class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorit
   def max(a: Cell, b: Cell): Cell = if (a.distanceFromStart > b.distanceFromStart) a else b
   maze.allCells.filterNot(_.distanceFromStart == Int.MaxValue).reduceLeft(max).isEnd = true
 
-  def makePng(fileName: String): Unit = maze.makePng(fileName)
+  def makePng(fileName: String): File = maze.makePng(fileName)
 
 }
 

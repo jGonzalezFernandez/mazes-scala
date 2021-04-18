@@ -1,12 +1,12 @@
 package jgonzalezfernandez.mazes.grids
 
-import java.awt.Color
-import java.awt.geom.Line2D
-import java.awt.image.BufferedImage
-
 import jgonzalezfernandez.mazes.Utils._
 import jgonzalezfernandez.mazes.grids.CircularGrid._
 
+import java.awt.Color
+import java.awt.geom.Line2D
+import java.awt.image.BufferedImage
+import java.io.File
 import scala.collection.mutable.ArrayBuffer
 
 final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA Polar grid
@@ -70,7 +70,7 @@ final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA Polar gri
 
   override def getEastCellOf(cell: Cell): Option[Cell] = getClockwiseCellOf(cell)
 
-  def makePng(fileName: String): Unit = {
+  def makePng(fileName: String): File = {
     /*
      *                          outerCCW
      *

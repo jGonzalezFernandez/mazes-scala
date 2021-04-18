@@ -1,8 +1,8 @@
 name := "mazes-scala"
 
-version := "0.5"
+version := "0.6"
 
-scalaVersion := "2.13.2"
+scalaVersion := "2.13.5"
 
 scalacOptions ++= Seq(
   "-unchecked",
@@ -12,7 +12,7 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "eu.timepit"    %% "refined"    % "0.9.14",
+  "eu.timepit"    %% "refined"    % "0.9.23",
   "com.beachape"  %% "enumeratum" % "1.6.1",
-  "org.scalatest" %% "scalatest"  % "3.1.2" % "test"
+  "org.scalatest" %% "scalatest"  % "3.2.7" % "test"
 )

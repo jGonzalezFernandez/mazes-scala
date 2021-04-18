@@ -6,13 +6,12 @@ import jgonzalezfernandez.mazes.grids.SquareGrid
 import org.scalatest.wordspec.AnyWordSpec
 
 class DijkstraSpec extends AnyWordSpec {
+  val rows: PositiveInt    = 5
+  val columns: PositiveInt = 5
 
   "Dijkstra algorithm" should {
 
-    val rows: PositiveInt    = 5
-    val columns: PositiveInt = 5
-
-    "Produce the shortest-path tree from a given starting point, taking into account the cell weights" in {
+    "produce the shortest-path tree from a given starting point, taking into account the cell weights" in {
       val squareGrid = SquareGrid(rows, columns)
 
       squareGrid.indexedCells(1)(4).weight = 10
@@ -71,7 +70,6 @@ class DijkstraSpec extends AnyWordSpec {
       assert(squareGrid.indexedCells(4)(2).distanceFromStart == 12)
       assert(squareGrid.indexedCells(4)(3).distanceFromStart == 13)
       assert(squareGrid.indexedCells(4)(4).distanceFromStart == 14)
-
     }
 
   }
