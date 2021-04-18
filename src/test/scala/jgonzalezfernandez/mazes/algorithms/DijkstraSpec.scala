@@ -12,7 +12,7 @@ class DijkstraSpec extends AnyWordSpec {
   "Dijkstra algorithm" should {
 
     "produce the shortest-path tree from a given starting point, taking into account the cell weights" in {
-      val squareGrid = SquareGrid(rows, columns)
+      val squareGrid = new SquareGrid(rows, columns)
 
       squareGrid.indexedCells(1)(4).weight = 10
 

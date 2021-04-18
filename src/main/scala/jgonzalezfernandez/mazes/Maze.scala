@@ -13,19 +13,19 @@ import java.io.File
   * @param columnsOpt always ignored when using a Circular grid.
   * A few loops will be generated randomly, so perfect mazes are unlikely to occur.
   */
-final case class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorithm, rows: PositiveInt, columnsOpt: Option[PositiveInt] = None) {
+final class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorithm, rows: PositiveInt, columnsOpt: Option[PositiveInt] = None) {
 
   if (generationAlgorithm == GenerationAlgorithm.RecursiveDivision && gridType != GridType.Square)
     throw new IllegalArgumentException("The RecursiveDivision algorithm only works with Square grids")
 
   private val grid = gridType match {
-    case GridType.Circular   => CircularGrid(rows)
-    case GridType.Hexagonal  => HexagonalGrid(rows, columnsOpt.getOrElse(rows))
-    case GridType.Square     => SquareGrid(rows, columnsOpt.getOrElse(rows))
-    case GridType.Triangular => TriangularGrid(rows, columnsOpt.getOrElse(rows))
+    case GridType.Circular   => new CircularGrid(rows)
+    case GridType.Hexagonal  => new HexagonalGrid(rows, columnsOpt.getOrElse(rows))
+    case GridType.Square     => new SquareGrid(rows, columnsOpt.getOrElse(rows))
+    case GridType.Triangular => new TriangularGrid(rows, columnsOpt.getOrElse(rows))
   }
 
-  def addLoops(grid: Grid): Grid = {
+  private def addLoops(grid: Grid): Grid = {
 
     def randomlyAddLoop(cell: Cell): Boolean = cell.linkCount == 1 && randomInt(9) == 0
 
@@ -52,7 +52,7 @@ final case class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorit
     ),
     Some(grid.startingCell)
   )
-  def max(a: Cell, b: Cell): Cell = if (a.distanceFromStart > b.distanceFromStart) a else b
+  private def max(a: Cell, b: Cell): Cell = if (a.distanceFromStart > b.distanceFromStart) a else b
   maze.allCells.filterNot(_.distanceFromStart == Int.MaxValue).reduceLeft(max).isEnd = true
 
   def makePng(fileName: String): File = maze.makePng(fileName)

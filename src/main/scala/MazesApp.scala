@@ -7,10 +7,10 @@ object MazesApp {
 
   def main(args: Array[String]): Unit = {
 
-    val deltaMaze = Maze(GridType.Triangular, GenerationAlgorithm.RecursiveBacktracker, 25, Some(62))
-    val gammaMaze = Maze(GridType.Square, GenerationAlgorithm.RecursiveDivision, 25, Some(36))
-    val sigmaMaze = Maze(GridType.Hexagonal, GenerationAlgorithm.Random, 17, Some(29))
-    val thetaMaze = Maze(GridType.Circular, GenerationAlgorithm.RecursiveBacktracker, 12)
+    val deltaMaze = new Maze(GridType.Triangular, GenerationAlgorithm.RecursiveBacktracker, 25, Some(62))
+    val gammaMaze = new Maze(GridType.Square, GenerationAlgorithm.RecursiveDivision, 25, Some(36))
+    val sigmaMaze = new Maze(GridType.Hexagonal, GenerationAlgorithm.Random, 17, Some(29))
+    val thetaMaze = new Maze(GridType.Circular, GenerationAlgorithm.RecursiveBacktracker, 12)
 
     deltaMaze.makePng("deltaMaze")
     gammaMaze.makePng("gammaMaze")

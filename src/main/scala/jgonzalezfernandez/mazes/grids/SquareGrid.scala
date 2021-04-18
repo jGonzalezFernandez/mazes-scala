@@ -8,7 +8,7 @@ import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 import java.io.File
 
-final case class SquareGrid(rows: PositiveInt, columns: PositiveInt) extends RegularTessellation { // AKA Orthogonal grid
+final class SquareGrid(val rows: PositiveInt, val columns: PositiveInt) extends RegularTessellation { // AKA Orthogonal grid
 
   def toString(showDistances: Boolean): String = {
     val corner         = "+"

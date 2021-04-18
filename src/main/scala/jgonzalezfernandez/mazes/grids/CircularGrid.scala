@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 import scala.collection.mutable.ArrayBuffer
 
-final case class CircularGrid(rows: PositiveInt) extends Grid { // AKA Polar grid
+final class CircularGrid(val rows: PositiveInt) extends Grid { // AKA Polar grid
 
   /* In a Polar grid, each row is delimited by a pair of concentric circles. Therefore, if we were to use a matrix to
    * represent the different cells of the maze, the outer ones would have to be much wider than the inner ones.
