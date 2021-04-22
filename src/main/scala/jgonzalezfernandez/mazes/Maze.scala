@@ -1,5 +1,6 @@
 package jgonzalezfernandez.mazes
 
+import eu.timepit.refined.auto._
 import jgonzalezfernandez.mazes.Maze._
 import jgonzalezfernandez.mazes.Utils.{PositiveInt, randomInt}
 import jgonzalezfernandez.mazes.algorithms._
@@ -7,22 +8,21 @@ import jgonzalezfernandez.mazes.grids._
 
 import java.io.File
 
-/** Triangular grid + BinaryTree or Sidewinder: not recommended (since unreachable areas will probably be generated), although it can be done.
-  * RecursiveDivision: currently only available for the Square grid (so it's never chosen when using Random).
-  * @param rows used to determine the full size of the grid if columnsOpt is empty.
-  * @param columnsOpt always ignored when using a Circular grid.
-  * A few loops will be generated randomly, so perfect mazes are unlikely to occur.
+/**  - Triangular grid + BinaryTree or Sidewinder: not recommended (since unreachable areas will probably be generated), although it can be done.
+  *  - RecursiveDivision: currently only available for the Square grid (so it's never chosen when using Random).
+  *  - rowsOpt and columnsOpt: default values will be used if they are needed but empty (the Circular grid only needs rows).
+  *  - A few loops will be generated randomly, so perfect mazes are unlikely to occur.
   */
-final class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorithm, rows: PositiveInt, columnsOpt: Option[PositiveInt] = None) {
+final class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorithm, rowsOpt: Option[PositiveInt], columnsOpt: Option[PositiveInt] = None) {
 
   if (generationAlgorithm == GenerationAlgorithm.RecursiveDivision && gridType != GridType.Square)
     throw new IllegalArgumentException("The RecursiveDivision algorithm only works with Square grids")
 
   private val grid = gridType match {
-    case GridType.Circular   => new CircularGrid(rows)
-    case GridType.Hexagonal  => new HexagonalGrid(rows, columnsOpt.getOrElse(rows))
-    case GridType.Square     => new SquareGrid(rows, columnsOpt.getOrElse(rows))
-    case GridType.Triangular => new TriangularGrid(rows, columnsOpt.getOrElse(rows))
+    case GridType.Circular   => new CircularGrid(rowsOpt.getOrElse(12))
+    case GridType.Hexagonal  => new HexagonalGrid(rowsOpt.getOrElse(17), columnsOpt.getOrElse(29))
+    case GridType.Square     => new SquareGrid(rowsOpt.getOrElse(25), columnsOpt.getOrElse(36))
+    case GridType.Triangular => new TriangularGrid(rowsOpt.getOrElse(25), columnsOpt.getOrElse(62))
   }
 
   private def addLoops(grid: Grid): Grid = {

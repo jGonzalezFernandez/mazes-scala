@@ -8,10 +8,10 @@ Some images:
 
 ![thetaMaze_img](thetaMaze.png)
 
+![sigmaMaze_img](sigmaMaze.png)
+
 ![gammaMaze_img](gammaMaze.png)
 
 ![deltaMaze_img](deltaMaze.png)
-
-![sigmaMaze_img](sigmaMaze.png)
 
 Related: [rogue-maze](https://github.com/jGonzalezFernandez/rogue-maze)
