@@ -8,7 +8,7 @@ import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 import java.io.File
 
-final class HexagonalGrid(val rows: PositiveInt, val columns: PositiveInt) extends RegularTessellation {
+final class HexagonalGrid(val rows: TwoTo100, val columns: TwoTo100) extends RegularTessellation {
 
   private def getNorthRow(cell: Cell): Int = if (isEven(cell.column)) cell.row - 1 else cell.row
 

@@ -1,10 +1,10 @@
 package jgonzalezfernandez.mazes.grids
 
-import jgonzalezfernandez.mazes.Utils.PositiveInt
+import jgonzalezfernandez.mazes.Utils.TwoTo100
 
 trait RegularTessellation extends Grid {
 
-  def columns: PositiveInt
+  def columns: TwoTo100
 
   val indexedCells: Vector[Vector[Cell]] = Vector.tabulate[Cell](rows.value, columns.value)((row, column) => Cell(row, column))
 

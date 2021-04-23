@@ -8,7 +8,7 @@ import java.awt.geom.Line2D
 import java.awt.image.BufferedImage
 import java.io.File
 
-final class TriangularGrid(val rows: PositiveInt, val columns: PositiveInt) extends RegularTessellation {
+final class TriangularGrid(val rows: TwoTo100, val columns: TwoTo100) extends RegularTessellation {
 
   private def isPointingUp(cell: Cell) = isEven(cell.row + cell.column)
 

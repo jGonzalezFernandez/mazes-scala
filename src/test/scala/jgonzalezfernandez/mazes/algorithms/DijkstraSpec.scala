@@ -1,13 +1,13 @@
 package jgonzalezfernandez.mazes.algorithms
 
 import eu.timepit.refined.auto._
-import jgonzalezfernandez.mazes.Utils.PositiveInt
+import jgonzalezfernandez.mazes.Utils.TwoTo100
 import jgonzalezfernandez.mazes.grids.SquareGrid
 import org.scalatest.wordspec.AnyWordSpec
 
 class DijkstraSpec extends AnyWordSpec {
-  val rows: PositiveInt    = 5
-  val columns: PositiveInt = 5
+  val rows: TwoTo100    = 5
+  val columns: TwoTo100 = 5
 
   "Dijkstra algorithm" should {
 

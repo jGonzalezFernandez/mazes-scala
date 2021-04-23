@@ -8,7 +8,7 @@ import java.io.File
 
 trait Grid {
 
-  def rows: PositiveInt
+  def rows: TwoTo100
 
   def indexedCells: Vector[collection.IndexedSeq[Cell]]
 

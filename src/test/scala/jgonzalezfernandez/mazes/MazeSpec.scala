@@ -1,7 +1,7 @@
 package jgonzalezfernandez.mazes
 
 import eu.timepit.refined.auto._
-import jgonzalezfernandez.mazes.Utils.PositiveInt
+import jgonzalezfernandez.mazes.Utils.TwoTo100
 import jgonzalezfernandez.mazes.algorithms.GenerationAlgorithm
 import jgonzalezfernandez.mazes.grids.GridType
 import org.scalatest.wordspec.AnyWordSpec
@@ -11,10 +11,10 @@ import java.nio.file.Files
 import javax.xml.bind.DatatypeConverter
 
 class MazeSpec extends AnyWordSpec {
-  val rows: PositiveInt    = 10
-  val columns: PositiveInt = 10
-  val seed                 = 0
-  val fileName             = "test"
+  val rows: TwoTo100    = 10
+  val columns: TwoTo100 = 10
+  val seed              = 0
+  val fileName          = "test"
 
   def fileToString(file: File): String = DatatypeConverter.printBase64Binary(Files.readAllBytes(file.toPath))
 

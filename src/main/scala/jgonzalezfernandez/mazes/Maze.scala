@@ -2,7 +2,7 @@ package jgonzalezfernandez.mazes
 
 import eu.timepit.refined.auto._
 import jgonzalezfernandez.mazes.Maze._
-import jgonzalezfernandez.mazes.Utils.{PositiveInt, randomInt}
+import jgonzalezfernandez.mazes.Utils.{TwoTo100, randomInt}
 import jgonzalezfernandez.mazes.algorithms._
 import jgonzalezfernandez.mazes.grids._
 
@@ -13,7 +13,7 @@ import java.io.File
   *  - rowsOpt and columnsOpt: default values will be used if they are needed but empty (the Circular grid only needs rows).
   *  - A few loops will be generated randomly, so perfect mazes are unlikely to occur.
   */
-final class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorithm, rowsOpt: Option[PositiveInt], columnsOpt: Option[PositiveInt] = None) {
+final class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorithm, rowsOpt: Option[TwoTo100], columnsOpt: Option[TwoTo100] = None) {
 
   if (generationAlgorithm == GenerationAlgorithm.RecursiveDivision && gridType != GridType.Square)
     throw new IllegalArgumentException("The RecursiveDivision algorithm only works with Square grids")

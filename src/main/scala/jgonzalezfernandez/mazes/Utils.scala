@@ -5,7 +5,7 @@ import eu.timepit.refined.numeric._
 
 object Utils {
 
-  type PositiveInt = Int Refined Positive
+  type TwoTo100 = Int Refined Interval.Closed[2, 100]
 
   val random = new scala.util.Random
 
