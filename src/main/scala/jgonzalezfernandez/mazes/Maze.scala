@@ -8,10 +8,11 @@ import jgonzalezfernandez.mazes.grids._
 
 import java.io.File
 
-/**  - Triangular grid + BinaryTree or Sidewinder: not recommended (since unreachable areas will probably be generated), although it can be done.
-  *  - RecursiveDivision: currently only available for the Square grid (so it's never chosen when using Random).
-  *  - rowsOpt and columnsOpt: default values will be used if they are needed but empty (the Circular grid only needs rows).
-  *  - A few loops will be generated randomly, so perfect mazes are unlikely to occur.
+/** Key points:
+  *   - Triangular grid + BinaryTree or Sidewinder: not recommended (since unreachable areas will probably be generated), although it can be done.
+  *   - RecursiveDivision: currently only available for the Square grid (so it's never chosen when using Random).
+  *   - rowsOpt and columnsOpt: default values will be used if they are needed but empty (the Circular grid only needs rows).
+  *   - A few loops will be generated randomly, so perfect mazes are unlikely to occur.
   */
 final class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorithm, rowsOpt: Option[TwoTo100], columnsOpt: Option[TwoTo100] = None) {
 
@@ -61,6 +62,6 @@ final class Maze(gridType: GridType, generationAlgorithm: GenerationAlgorithm, r
 
 object Maze {
 
-  val UNIVERSAL_ALGORITHMS = Seq(BinaryTree, RecursiveBacktracker, Sidewinder)
+  val UNIVERSAL_ALGORITHMS: Seq[Algorithm[Grid]] = Seq(BinaryTree, RecursiveBacktracker, Sidewinder)
 
 }
